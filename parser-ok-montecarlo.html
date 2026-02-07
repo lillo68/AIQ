@@ -991,113 +991,6 @@
                 margin-bottom: 8px;
             }
         }
-
-        /* Stili per grafici Monte Carlo */
-        .mc-graph-container {
-            position: relative;
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid #e5e7eb;
-        }
-
-        .mc-graph-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .mc-graph-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .mc-legend {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px solid #f3f4f6;
-        }
-
-        .mc-legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 11px;
-            color: #6b7280;
-        }
-
-        .mc-legend-color {
-            width: 12px;
-            height: 12px;
-            border-radius: 2px;
-        }
-
-        .mc-tooltip {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 6px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            pointer-events: none;
-            z-index: 1000;
-            display: none;
-        }
-
-        .mc-stat-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        .mc-stat-positive {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .mc-stat-negative {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .mc-stat-neutral {
-            background: #f3f4f6;
-            color: #4b5563;
-        }
-
-        /* Stili per la tabella Monte Carlo */
-        #tabellaDettaglioMonteCarlo tr:hover {
-            background-color: #f8fafc;
-        }
-
-        #tabellaDettaglioMonteCarlo td {
-            vertical-align: middle;
-        }
-
-        /* Responsive per grafici */
-        @media (max-width: 768px) {
-            #roiDistributionCanvas,
-            #mcBankrollCanvas {
-                max-width: 100%;
-                height: auto;
-            }
-            
-            .mc-graph-controls {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
             </style>
 </head>
 <body>
@@ -2626,7 +2519,7 @@
                         </div>
                     </div>
 
-                    <!-- SEZIONE MONTE CARLO -->
+                                        <!-- SEZIONE MONTE CARLO -->
                     <div style="margin-top: 20px; padding: 20px; background: #f5f3ff; border-radius: 8px; border: 1px solid #8b5cf6;">
                         <h4 style="margin-top: 0; margin-bottom: 15px; color: #7c3aed;">🎲 Analisi Monte Carlo</h4>
                         
@@ -2710,7 +2603,7 @@
                                 📤 Esporta
                             </button>
                         </div>
-
+                        
                         <!-- PROGRESS BAR -->
                         <div id="progressMonteCarlo" style="display: none; margin-top: 15px;">
                             <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
@@ -2756,154 +2649,8 @@
                                 <div style="font-size: 11px; color: #666; margin-top: 3px;">VaR 95%</div>
                                 <div style="font-size: 10px; color: #6b7280;">Peggiore perdita</div>
                             </div>
-
-                            <!-- METRICA SKEWNESS -->
-                            <div style="text-align: center; padding: 15px; background: #faf5ff; border-radius: 6px; border-left: 4px solid #8b5cf6;">
-                                <div style="font-size: 20px; font-weight: bold; color: #8b5cf6;" id="mcSkewness">0.00</div>
-                                <div style="font-size: 11px; color: #666; margin-top: 3px;">Skewness</div>
-                                <div style="font-size: 10px; color: #6b7280;" id="mcSkewnessLabel">Distribuzione</div>
-                            </div>
                         </div>
                         
-                        <!-- ANALISI RISCHIO AVANZATA -->
-                        <div style="margin-top: 30px; padding: 20px; background: #fffbeb; border-radius: 8px; border: 1px solid #fbbf24;">
-                            <h4 style="margin-top: 0; margin-bottom: 15px; color: #d97706;">🛡️ Analisi Rischio Avanzata</h4>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
-                                <!-- COLONNA SINISTRA - METRICHE RISCHIO -->
-                                <div>
-                                    <h5 style="margin-top: 0; margin-bottom: 10px; color: #92400e; font-size: 13px;">📉 Metriche di Rischio</h5>
-                                    
-                                    <div style="background: white; padding: 15px; border-radius: 6px; border: 1px solid #fde68a;">
-                                        <!-- Profit Factor -->
-                                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #f3f4f6;">
-                                            <span style="font-size: 13px; color: #4b5563;">Profit Factor</span>
-                                            <span id="metricProfitFactor" style="font-weight: bold; font-size: 14px;">0.00</span>
-                                        </div>
-                                        
-                                        <!-- Losing Streak Atteso -->
-                                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #f3f4f6;">
-                                            <span style="font-size: 13px; color: #4b5563;">Losing Streak Atteso</span>
-                                            <span id="metricLosingStreak" style="font-weight: bold; font-size: 14px;">0</span>
-                                        </div>
-                                        
-                                        <!-- Risk of Ruin -->
-                                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #f3f4f6;">
-                                            <span style="font-size: 13px; color: #4b5563;">Risk of Ruin</span>
-                                            <span id="metricRiskOfRuin" style="font-weight: bold; font-size: 14px;">0%</span>
-                                        </div>
-                                        
-                                        <!-- Calda Ratio -->
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <span style="font-size: 13px; color: #4b5563;">Calda Ratio (ROI/DD)</span>
-                                            <span id="metricCaldaRatio" style="font-weight: bold; font-size: 14px;">0.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- COLONNA DESTRA - RACCOMANDAZIONI -->
-                                <div>
-                                    <h5 style="margin-top: 0; margin-bottom: 10px; color: #92400e; font-size: 13px;">🎯 Raccomandazioni</h5>
-                                    
-                                    <div style="background: white; padding: 15px; border-radius: 6px; border: 1px solid #d1fae5;">
-                                        <!-- Bankroll Minimo -->
-                                        <div style="margin-bottom: 12px;">
-                                            <div style="font-size: 12px; color: #6b7280; margin-bottom: 3px;">Bankroll Minimo Consigliato</div>
-                                            <div id="recBankroll" style="font-size: 18px; font-weight: bold; color: #059669;">0€</div>
-                                            <div style="font-size: 11px; color: #9ca3af;">3x VaR 95% per sicurezza</div>
-                                        </div>
-                                        
-                                        <!-- Kelly Optimal -->
-                                        <div style="margin-bottom: 12px;">
-                                            <div style="font-size: 12px; color: #6b7280; margin-bottom: 3px;">Kelly Optimal (f*)</div>
-                                            <div id="recKellyOptimal" style="font-size: 16px; font-weight: bold; color: #2563eb;">0%</div>
-                                            <div style="font-size: 11px; color: #9ca3af;">Frazione ottimale del bankroll</div>
-                                        </div>
-                                        
-                                        <!-- Expectancy -->
-                                        <div>
-                                            <div style="font-size: 12px; color: #6b7280; margin-bottom: 3px;">Expectancy per Scommessa</div>
-                                            <div id="recExpectancy" style="font-size: 16px; font-weight: bold; color: #7c3aed;">0%</div>
-                                            <div style="font-size: 11px; color: #9ca3af;">ROI medio per singola scommessa</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- AVVISO IMPORTANTE -->
-                                    <div style="margin-top: 15px; padding: 10px; background: #fef3c7; border-radius: 6px; border-left: 4px solid #f59e0b;">
-                                        <div style="font-size: 12px; color: #92400e; font-weight: bold; margin-bottom: 5px;">⚠️ Attenzione al Drawdown!</div>
-                                        <div style="font-size: 11px; color: #92400e;">
-                                            Max drawdown storico: <span id="warningMaxDD" style="font-weight: bold;">0%</span>. 
-                                            Considera uno stop-loss al 20-25%.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- LEGENDA INTERPRETAZIONE -->
-                            <div style="margin-top: 15px; padding: 12px; background: #f8fafc; border-radius: 6px; border: 1px solid #e5e7eb;">
-                                <div style="font-size: 12px; color: #4b5563; font-weight: bold; margin-bottom: 8px;">📖 Come interpretare queste metriche:</div>
-                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 11px; color: #6b7280;">
-                                    <div>
-                                        <span style="color: #059669; font-weight: bold;">Profit Factor > 1.5:</span> Sistema profittevole
-                                    </div>
-                                    <div>
-                                        <span style="color: #dc2626; font-weight: bold;">Risk of Ruin > 5%:</span> Rischio elevato
-                                    </div>
-                                    <div>
-                                        <span style="color: #059669; font-weight: bold;">Calda Ratio > 1:</span> Buon rapporto rischio/rendimento
-                                    </div>
-                                    <div>
-                                        <span style="color: #f59e0b; font-weight: bold;">Kelly > 10%:</span> Ridurre lo stake
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- ANALISI PERFORMANCE PER SPORT (OPZIONALE) -->
-                        <div style="margin-top: 30px; padding: 20px; background: #f0f9ff; border-radius: 8px; border: 1px solid #93c5fd; display: none;" id="analisiSportContainer">
-                            <h4 style="margin-top: 0; margin-bottom: 15px; color: #1d4ed8;">🏆 Analisi Performance per Sport</h4>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-                                <!-- TABELLA PERFORMANCE -->
-                                <div>
-                                    <div style="font-size: 13px; color: #4b5563; margin-bottom: 10px;">Performance per categoria:</div>
-                                    <div class="results-container" style="max-height: 200px; overflow-y: auto;">
-                                        <table class="bookmaker-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Sport</th>
-                                                    <th>Scommesse</th>
-                                                    <th>Win Rate</th>
-                                                    <th>ROI</th>
-                                                    <th>Performance</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="tabellaPerformanceSport">
-                                                <!-- Dati verranno inseriti qui -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                
-                                <!-- GRAFICO A TORTA -->
-                                <div>
-                                    <div style="font-size: 13px; color: #4b5563; margin-bottom: 10px;">Distribuzione per sport:</div>
-                                    <div style="height: 180px; background: white; border-radius: 6px; padding: 10px; display: flex; align-items: center; justify-content: center;">
-                                        <canvas id="sportDistributionCanvas" width="200" height="160"></canvas>
-                                    </div>
-                                    <div style="font-size: 11px; color: #6b7280; text-align: center; margin-top: 5px;">% del totale scommesse</div>
-                                </div>
-                            </div>
-                            
-                            <!-- PULSANTE PER CALCOLARE -->
-                            <div style="text-align: center; margin-top: 15px;">
-                                <button onclick="calcolaAnalisiPerformanceSport()" 
-                                        style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 12px;">
-                                    🔍 Calcola Performance per Sport
-                                </button>
-                            </div>
-                        </div>
-
                         <!-- DISTRIBUZIONE ROI -->
                         <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
                             <h4 style="margin-top: 0; margin-bottom: 15px;">📊 Distribuzione ROI</h4>
@@ -3136,31 +2883,12 @@
         // ==============================
         // FUNZIONE PER GENERARE ID UNIVOCI
         // ==============================
-        // Contatore incrementale per garantire unicità anche se Date.now() e
-        // performance.now() dovessero restituire lo stesso valore in chiamate
-        // molto ravvicinate.
-        let _generaIdEventoCounter = 0;
         function generaIdEvento() {
-            _generaIdEventoCounter = (_generaIdEventoCounter + 1) & 0xfffff; // evita overflow infinito
-
             const timestamp = Date.now();
-            const perf = (typeof performance !== 'undefined' && performance.now) ? Math.floor(performance.now()) : 0;
-
-            // Usa crypto per una parte casuale più robusta quando disponibile
-            let rand = '';
-            try {
-                if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
-                    const bytes = new Uint8Array(6);
-                    crypto.getRandomValues(bytes);
-                    rand = Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
-                } else {
-                    rand = Math.random().toString(36).substring(2, 12);
-                }
-            } catch (e) {
-                rand = Math.random().toString(36).substring(2, 12);
-            }
-
-            return `ev_${timestamp}_${perf}_${_generaIdEventoCounter}_${rand}`;
+            const random = Math.random().toString(36).substring(2, 15) + 
+                        Math.random().toString(36).substring(2, 15); // Più lungo
+            const microtime = performance.now().toString().replace('.', '').slice(-6);
+            return `ev_${timestamp}_${microtime}_${random.substring(0, 8)}`;
         }
 
         // Esempi di ID generati:
@@ -3933,8 +3661,83 @@ tippmix_hu
             showNotification('Dati 2 esiti puliti', 'info');
         }
 
-        // Definizione duplicata di `aggiornaIndicatoriSoglie` rimossa;
-        // l'implementazione successiva e più completa presente più avanti nel file verrà usata.
+        function aggiornaIndicatoriSoglie() {
+            console.log("aggiornaIndicatoriSoglie chiamato. Soglie:", soglieAIQ);
+            
+            // Assicurati che soglieAIQ esista
+            if (!soglieAIQ) {
+                console.error("soglieAIQ non definita! Usando default...");
+                soglieAIQ = {
+                    sm: 5,
+                    mm: 8,
+                    ss: 7,
+                    near: 0.5
+                };
+            }
+            
+            // Aggiorna nei calcolatori AIQ CALCIO
+            const valoreSM = document.getElementById('valoreSM');
+            const valoreMM = document.getElementById('valoreMM');
+            const valoreSS = document.getElementById('valoreSS');
+            
+            if (valoreSM && valoreMM && valoreSS) {
+                valoreSM.textContent = soglieAIQ.sm;
+                valoreMM.textContent = soglieAIQ.mm;
+                valoreSS.textContent = soglieAIQ.ss;
+                console.log("AIQ Calcio aggiornato:", soglieAIQ.sm, soglieAIQ.mm, soglieAIQ.ss);
+            }
+            
+            // Aggiorna nei calcolatori AIQ TENNIS
+            const valoreSM_T = document.getElementById('valoreSM_T');
+            const valoreMM_T = document.getElementById('valoreMM_T');
+            const valoreSS_T = document.getElementById('valoreSS_T');
+            
+            if (valoreSM_T && valoreMM_T && valoreSS_T) {
+                valoreSM_T.textContent = soglieAIQ.sm;
+                valoreMM_T.textContent = soglieAIQ.mm;
+                valoreSS_T.textContent = soglieAIQ.ss;
+                console.log("AIQ Tennis aggiornato:", soglieAIQ.sm, soglieAIQ.mm, soglieAIQ.ss);
+            }
+            
+            // Cambia colore/stile se le soglie sono personalizzate
+            const sonoDefault = soglieAIQ.sm === 5 && soglieAIQ.mm === 8 && soglieAIQ.ss === 7;
+            
+            // Per AIQ Calcio
+            const indicatoreCalcio = document.getElementById('soglieAttiveCalcio');
+            if (indicatoreCalcio) {
+                if (!sonoDefault) {
+                    indicatoreCalcio.style.background = '#fef3c7';
+                    indicatoreCalcio.style.color = '#92400e';
+                    indicatoreCalcio.style.border = '1px solid #f59e0b';
+                    indicatoreCalcio.style.fontWeight = 'bold';
+                    indicatoreCalcio.title = `⚠️ Soglie personalizzate (default: 5-8-7%)`;
+                } else {
+                    indicatoreCalcio.style.background = '#dbeafe';
+                    indicatoreCalcio.style.color = '#1d4ed8';
+                    indicatoreCalcio.style.border = '1px solid #93c5fd';
+                    indicatoreCalcio.style.fontWeight = 'normal';
+                    indicatoreCalcio.title = `Soglie di default`;
+                }
+            }
+            
+            // Per AIQ Tennis
+            const indicatoreTennis = document.getElementById('soglieAttiveTennis');
+            if (indicatoreTennis) {
+                if (!sonoDefault) {
+                    indicatoreTennis.style.background = '#fef3c7';
+                    indicatoreTennis.style.color = '#92400e';
+                    indicatoreTennis.style.border = '1px solid #f59e0b';
+                    indicatoreTennis.style.fontWeight = 'bold';
+                    indicatoreTennis.title = `⚠️ Soglie personalizzate (default: 5-8-7%)`;
+                } else {
+                    indicatoreTennis.style.background = '#dbeafe';
+                    indicatoreTennis.style.color = '#1d4ed8';
+                    indicatoreTennis.style.border = '1px solid #93c5fd';
+                    indicatoreTennis.style.fontWeight = 'normal';
+                    indicatoreTennis.title = `Soglie di default`;
+                }
+            }
+        }
 
         // ==============================
         // Funzioni per parser 3 esiti
@@ -5171,11 +4974,76 @@ tippmix_hu
             }
         }
 
-        // Definizione duplicata di `filtraEventi` rimossa; mantenuta la
-        // versione avanzata e più completa presente successivamente nel file.
+        function filtraEventi() {
+            const searchTerm = document.getElementById('cercaEvento').value.toLowerCase();
+            const filtroSport = document.getElementById('filtroSport').value;
+            const filtroSoloValue = document.getElementById('filtroSoloValue').checked;
+            const filtroEsitoValue = document.getElementById('filtroEsitoValue').value;
+            const filtroForzaValue = parseFloat(document.getElementById('filtroForzaValue').value);
+            
+            let filtrati = databaseEventi;
+            
+            // Filtro ricerca testo
+            if (searchTerm) {
+                filtrati = filtrati.filter(e => 
+                    e.nome.toLowerCase().includes(searchTerm) || 
+                    e.lega.toLowerCase().includes(searchTerm) ||
+                    (e.id && e.id.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            // Filtro sport
+            if (filtroSport) {
+                filtrati = filtrati.filter(e => e.sport === filtroSport);
+            }
+            
+            // Filtro AIQ avanzati
+            if (filtroSoloValue || filtroEsitoValue || filtroForzaValue > 0) {
+                filtrati = filtrati.filter(evento => {
+                    const aiqStats = evento.aiqData ? evento.aiqData.stats : null;
+                    const risultatoAIQ = verificaValueBetAIQ(aiqStats, evento.tipoQuotes);
+                    
+                    if (filtroSoloValue && !risultatoAIQ.hasValue) {
+                        return false;
+                    }
+                    
+                    if (filtroEsitoValue && risultatoAIQ.outcome !== filtroEsitoValue) {
+                        return false;
+                    }
+                    
+                    if (filtroForzaValue > 0 && risultatoAIQ.forzaValue < filtroForzaValue) {
+                        return false;
+                    }
+                    
+                    return true;
+                });
+            }
+            
+            // *** MODIFICA PER PAGINAZIONE ***
+            paginaCorrente = 1; // Torna alla prima pagina
+            eventiFiltrati = filtrati; // Salva gli eventi filtrati
+            ordinaEventiFiltrati(); // Applica ordinamento
+            mostraTabellaEventi(eventiFiltrati); // Mostra con ordinamento
+            
+            // Notifica
+            showNotification(`Trovati ${filtrati.length} eventi`, 'info', 2000);
+        }
 
-        // Prima implementazione duplicata di `resetFiltri` rimossa; la versione
-        // avanzata è conservata più avanti nel file.
+        function resetFiltri() {
+            // Reset tutti i campi filtro
+            document.getElementById('cercaEvento').value = '';
+            document.getElementById('filtroSport').value = '';
+            document.getElementById('filtroSoloValue').checked = false;
+            document.getElementById('filtroEsitoValue').value = '';
+            document.getElementById('filtroForzaValue').value = '0';
+            
+            // Mostra tutti gli eventi
+            eventiFiltrati = [...databaseEventi];
+            ordinaEventiFiltrati();
+            paginaCorrente = 1;
+            mostraTabellaEventi();
+            showNotification('Filtri resettati', 'info');
+        }
 
         // ==============================
         // FUNZIONI ESPORTAZIONE EVENTI
@@ -5564,10 +5432,6 @@ tippmix_hu
                                 ${evento.risultatoTimestamp ? new Date(evento.risultatoTimestamp).toLocaleString() : ''}
                             </small>
                         </div>
-                        <button id="btn-modifica-${evento.id}" onclick="impostaRisultato('${evento.id}', 'modifica')" 
-                                style="background: #166534; color: white; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; white-space: nowrap;">
-                            ✏️ Modifica
-                        </button>
                     </div>
                 </div>` : 
                 `<div style="margin-top: 15px; padding: 12px; background: #fef9c3; border-radius: 8px; border-left: 4px solid #ca8a04;">
@@ -5576,7 +5440,7 @@ tippmix_hu
                             <strong>⚠️ Nessun Risultato Impostato</strong><br>
                             <small style="color: #666;">Imposta il risultato per includere nel backtest</small>
                         </div>
-                        <button id="btn-imposta-${evento.id}" onclick="impostaRisultato('${evento.id}', 'imposta')" 
+                        <button onclick="impostaRisultato('${evento.id}')" 
                                 style="background: #2563eb; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold;">
                             🎯 Imposta Risultato
                         </button>
@@ -5763,123 +5627,6 @@ tippmix_hu
         function chiudiModal() {
             const modal = document.getElementById('eventoModal');
             modal.style.display = 'none';
-        }
-
-        // Mostra un piccolo form con pulsanti predefiniti per impostare il risultato
-        // in modo coerente con la tab Backtest. Salvataggio sincronizzato.
-        function impostaRisultato(eventId, tipo = 'imposta') {
-            if (!eventId) {
-                showNotification('ID evento non valido', 'error');
-                return;
-            }
-
-            const evento = databaseEventi.find(e => e.id === eventId);
-            if (!evento) {
-                showNotification('Evento non trovato', 'error');
-                return;
-            }
-
-            // Determina quale pulsante nascondere in base al tipo (imposta o modifica)
-            let btnId = tipo === 'modifica' ? `btn-modifica-${eventId}` : `btn-imposta-${eventId}`;
-            const btnOriginal = document.getElementById(btnId);
-            if (btnOriginal) {
-                btnOriginal.style.display = 'none';
-            }
-
-            // Definisci opzioni in base al tipo di quotes
-            let options = [];
-            if (evento.tipoQuotes === '3_esiti') {
-                options = [
-                    { v: 'HOME', t: '1' },
-                    { v: 'DRAW', t: 'X' },
-                    { v: 'AWAY', t: '2' }
-                ];
-            } else if (evento.tipoQuotes === '2_esiti') {
-                options = [
-                    { v: 'YES', t: 'SÌ' },
-                    { v: 'NO', t: 'NO' }
-                ];
-            } else {
-                options = [
-                    { v: 'vinto', t: 'vinto' },
-                    { v: 'perso', t: 'perso' }
-                ];
-            }
-
-            // Crea il picker HTML inline
-            const picker = document.createElement('div');
-            picker.id = `risultatoPicker-${eventId}`;
-            picker.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px;';
-
-            options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.setAttribute('data-val', opt.v);
-                btn.textContent = opt.t;
-                btn.style.cssText = 'background:#059669;color:#fff;border:none;padding:8px 12px;border-radius:4px;cursor:pointer;font-weight:600;font-size:13px;';
-                btn.addEventListener('click', function() {
-                    salvaRisultatoSingolo(eventId, opt.v, btnOriginal, picker);
-                });
-                picker.appendChild(btn);
-            });
-
-            // Aggiungi pulsante Annulla
-            const btnCancel = document.createElement('button');
-            btnCancel.type = 'button';
-            btnCancel.textContent = 'Annulla';
-            btnCancel.style.cssText = 'background:#6b7280;color:#fff;border:none;padding:8px 12px;border-radius:4px;cursor:pointer;font-weight:600;font-size:13px;margin-left:8px;';
-            btnCancel.addEventListener('click', function() {
-                picker.remove();
-                if (btnOriginal) btnOriginal.style.display = 'block';
-            });
-            picker.appendChild(btnCancel);
-
-            // Inserisci il picker dopo il pulsante
-            if (btnOriginal && btnOriginal.parentNode) {
-                btnOriginal.parentNode.insertBefore(picker, btnOriginal.nextSibling);
-            }
-        }
-
-        // Salva un singolo risultato (usato sia dalla modal evento che dalla tab Backtest)
-        function salvaRisultatoSingolo(eventId, valore, btnOriginal = null, picker = null) {
-            if (!eventId) return;
-            const idx = databaseEventi.findIndex(e => e.id === eventId);
-            if (idx === -1) {
-                showNotification('Evento non trovato', 'error');
-                return;
-            }
-
-            databaseEventi[idx].risultatoReale = valore;
-            databaseEventi[idx].risultatoTimestamp = new Date().toISOString();
-            localStorage.setItem('databaseEventi', JSON.stringify(databaseEventi));
-
-            // Aggiorna UI
-            calcolaStatisticheDatabase();
-            refreshDatabaseEventi();
-            mostraTabellaEventi();
-            aggiornaStatisticheBacktest();
-
-            // Aggiorna select nella modal Backtest se presente
-            const selectBack = document.querySelector(`.select-risultato[data-event-id="${eventId}"]`);
-            if (selectBack) {
-                selectBack.value = valore;
-            }
-
-            // Rimuovi picker e rimostra pulsante
-            if (picker && picker.parentNode) {
-                picker.parentNode.removeChild(picker);
-            }
-            if (btnOriginal) {
-                btnOriginal.style.display = 'block';
-            }
-
-            // Se la modal evento è aperta, ricarica i dettagli
-            const modal = document.getElementById('eventoModal');
-            if (modal && modal.style.display === 'block') {
-                mostraDettagliEventoModal(eventId);
-            }
-
-            showNotification('Risultato impostato', 'success');
         }
 
         // Chiudi la modal cliccando fuori
@@ -6939,8 +6686,45 @@ tippmix_hu
             return x - Math.floor(x);
         };
 
-        // Funzione `calcolaQuotaUsata` (prima implementazione) rimossa;
-        // mantenuta la versione completa più avanti nel file.
+        // Aggiungi queste funzioni helper se non esistono
+        function calcolaQuotaUsata(evento, tipoBookmaker) {
+            // Logica per determinare quale quota usare
+            if (!evento.quotes || evento.quotes.length === 0) return null;
+            
+            const stats = evento.aiqData?.stats;
+            if (!stats) return evento.quotes[0].quote1 || evento.quotes[0].quoteYes;
+            
+            switch(tipoBookmaker) {
+                case 'migliore':
+                    // Ritorna la migliore quota per l'esito value
+                    const valueBet = verificaValueBetAIQ(stats, evento.tipoQuotes);
+                    if (valueBet.hasValue) {
+                        if (evento.tipoQuotes === '3_esiti') {
+                            return valueBet.outcome === '1' ? stats.min1 :
+                                valueBet.outcome === 'X' ? stats.minX : stats.min2;
+                        } else {
+                            return valueBet.outcome === 'SI' ? stats.minYes : stats.minNo;
+                        }
+                    }
+                    break;
+                case 'sharp':
+                    // Usa la quota sharp
+                    if (evento.tipoQuotes === '3_esiti') {
+                        return stats.pinnacle1 || stats.betfair1;
+                    } else {
+                        return stats.pinnacleYes || stats.betfairYes;
+                    }
+                case 'media':
+                    // Usa la media
+                    if (evento.tipoQuotes === '3_esiti') {
+                        return stats.avg1;
+                    } else {
+                        return stats.avgYes;
+                    }
+            }
+            
+            return null;
+        }
 
         // ==============================
         // FUNZIONI ANALISI MONTE CARLO
@@ -7044,7 +6828,8 @@ tippmix_hu
                     }
                     
                     // Esegui backtest con eventi randomizzati
-                    const risultatoSimulazione = eseguiBacktestSingolo(eventiSimulazione, parametriBacktest, simulazioniCompletate + i);                    
+                    const risultatoSimulazione = eseguiBacktestSingolo(eventiSimulazione, parametriBacktest);
+                    
                     // Aggiungi metadati
                     risultatoSimulazione.simulazioneId = simulazioniCompletate + i + 1;
                     risultatoSimulazione.parametri = {
@@ -7093,225 +6878,62 @@ tippmix_hu
         }
 
         function randomizzaEsiti(eventi) {
-            if (!eventi || eventi.length === 0) return [];
-            
-            // Calcola win rate REALE basato sui risultati esistenti
-            const eventiConRisultato = eventi.filter(e => e.risultatoReale !== undefined);
-            
-            if (eventiConRisultato.length === 0) {
-                // Se non ci sono risultati reali, usa un win rate teorico
-                return eventi.map(evento => {
-                    const nuovoEvento = { ...evento };
-                    
-                    // Determina se l'evento ha una value bet
-                    const aiqStats = evento.aiqData?.stats;
-                    let probVittoria = 0.5; // Default 50%
-                    
-                    if (aiqStats) {
-                        const valueBet = verificaValueBetAIQ(aiqStats, evento.tipoQuotes);
-                        if (valueBet.hasValue) {
-                            // Value bet ha probabilità più alta
-                            const quota = calcolaQuotaPerEsito(evento, valueBet.outcome, 'migliore') || 2.0;
-                            probVittoria = 1 / quota; // Probabilità implicita
-                            
-                            // Aggiungi edge della value bet (forzaValue/100)
-                            const edge = Math.min(0.2, valueBet.forzaValue / 300); // Max 20% edge
-                            probVittoria += edge;
-                            probVittoria = Math.min(0.9, probVittoria); // Max 90%
-                        }
-                    }
-                    
-                    // Randomizza con la probabilità calcolata
-                    nuovoEvento.risultatoReale = Math.random() < probVittoria ? 'vinto' : 'perso';
-                    return nuovoEvento;
-                });
-            }
-            
             // Calcola win rate reale
-            const eventiVinti = eventiConRisultato.filter(e => 
-                e.risultatoReale === 'vinto' || e.risultatoReale === '1' || 
-                e.risultatoReale === 'X' || e.risultatoReale === '2' ||
-                e.risultatoReale === 'SI' || e.risultatoReale === 'NO'
-            ).length;
+            const totaleEventi = eventi.length;
+            const eventiVinti = eventi.filter(e => e.risultato === 'vinto').length;
+            const winRateReale = totaleEventi > 0 ? eventiVinti / totaleEventi : 0.5;
             
-            const winRateReale = eventiConRisultato.length > 0 ? 
-                eventiVinti / eventiConRisultato.length : 0.5;
-            
-            console.log(`Win rate reale: ${(winRateReale * 100).toFixed(1)}%`);
-            
-            // Randomizza mantenedo lo stesso win rate ma introducendo variabilità
+            // Randomizza esiti mantenendo lo stesso win rate
             const eventiRandomizzati = eventi.map(evento => {
-                const nuovoEvento = { ...evento };
-                const aiqStats = evento.aiqData?.stats;
+                const nuovoEvento = {...evento};
                 
-                // Determina probabilità di vittoria per QUESTO evento specifico
-                let probVittoria = winRateReale;
-                
-                if (aiqStats) {
-                    const valueBet = verificaValueBetAIQ(aiqStats, evento.tipoQuotes);
-                    if (valueBet.hasValue) {
-                        // Evento CON value bet: probabilità più alta
-                        const quota = calcolaQuotaPerEsito(evento, valueBet.outcome, 'migliore') || 2.0;
-                        probVittoria = 1 / quota; // Probabilità implicita
-                        
-                        // Aggiungi edge in base alla forza della value bet
-                        const edge = Math.min(0.15, valueBet.forzaValue / 400);
-                        probVittoria += edge;
-                        
-                        // Limita tra 0.3 e 0.85
-                        probVittoria = Math.max(0.3, Math.min(0.85, probVittoria));
-                    } else {
-                        // Evento SENZA value bet: probabilità più bassa
-                        probVittoria = winRateReale * 0.7; // 30% meno del win rate medio
-                        probVittoria = Math.max(0.2, Math.min(0.6, probVittoria));
-                    }
-                }
-                
-                // Introduci varianza casuale (±10%)
-                const varianza = (Math.random() * 0.2) - 0.1; // -10% a +10%
-                probVittoria += varianza;
-                
-                // Limita tra 0.1 e 0.9
-                probVittoria = Math.max(0.1, Math.min(0.9, probVittoria));
-                
-                // Decidi esito
+                // Decidi casualmente se l'evento vince o perde
+                // mantenendo la stessa distribuzione complessiva
                 const randomValue = Math.random();
-                nuovoEvento.risultatoReale = randomValue < probVittoria ? 'vinto' : 'perso';
-                
-                // Conserva la probabilità per debug
-                nuovoEvento._probVittoria = probVittoria;
+                nuovoEvento.risultato = randomValue < winRateReale ? 'vinto' : 'perso';
                 
                 return nuovoEvento;
             });
             
-            // Verifica win rate risultante
-            const nuoviVinti = eventiRandomizzati.filter(e => e.risultatoReale === 'vinto').length;
-            const nuovoWinRate = eventiRandomizzati.length > 0 ? 
-                nuoviVinti / eventiRandomizzati.length : 0;
-            
-            console.log(`Win rate randomizzato: ${(nuovoWinRate * 100).toFixed(1)}%`);
-            
             return eventiRandomizzati;
         }
 
-        function eseguiBacktestSingolo(eventi, parametri, simulazioneIndex) {
-            if (!eventi || eventi.length === 0) {
-                return creaRisultatoDefault(parametri);
-            }
-            
-            // Introduce "bad luck factor" basato sull'indice della simulazione
-            // Le simulazioni con indice alto hanno più sfortuna
-            const badLuckFactor = (simulazioneIndex / 100) * 0.3; // Fino a 30% di sfortuna
+        function eseguiBacktestSingolo(eventi, parametri) {
+            // Questa funzione esegue un singolo backtest con i parametri specificati
+            // Implementa qui la logica del backtest singolo
             
             const risultato = {
-                simulazioneId: simulazioneIndex + 1,
                 roi: 0,
                 winRate: 0,
                 profitto: 0,
                 maxDrawdown: 0,
                 sharpeRatio: 0,
-                scommesseTotali: 0,
+                scommesseTotali: eventi.length,
                 scommesseVinte: 0,
                 bankrollFinale: parametri.bankrollIniziale,
                 evoluzioneBankroll: [],
-                dettaglioScommesse: [],
-                quotaVittoria: 0,
-                badLuckFactor: badLuckFactor
+                dettaglioScommesse: []
             };
             
-            // Filtra SOLO gli eventi con value bet per il backtest
-            const eventiValueBet = eventi.filter(evento => {
-                const aiqStats = evento.aiqData?.stats;
-                if (!aiqStats) return false;
-                
-                const valueBet = verificaValueBetAIQ(aiqStats, evento.tipoQuotes);
-                return valueBet.hasValue;
-            });
-            
-            if (eventiValueBet.length === 0) {
-                console.log(`Simulazione ${simulazioneIndex + 1}: Nessuna value bet trovata`);
-                return creaRisultatoDefault(parametri);
-            }
-            
-            // SELEZIONA CASUALMENTE solo una parte degli eventi (70-90%)
-            const percentualeEventi = 0.7 + (Math.random() * 0.2); // 70-90%
-            const numEventiDaUsare = Math.max(5, Math.floor(eventiValueBet.length * percentualeEventi));
-            
-            // Mescola e seleziona
-            const eventiSelezionati = [...eventiValueBet]
-                .sort(() => Math.random() - 0.5)
-                .slice(0, numEventiDaUsare);
-            
-            risultato.scommesseTotali = eventiSelezionati.length;
-            
-            // Configurazione strategia stake
-            const strategiaStake = parametri.strategiaStake || 'fisso';
+            // Simulazione semplificata 
             let bankrollCorrente = parametri.bankrollIniziale;
             let bankrollMax = bankrollCorrente;
             let maxDrawdown = 0;
-            let profitti = [];
             
-            // Inizializza evoluzione
+            // Genera dati di evoluzione
             risultato.evoluzioneBankroll.push(bankrollCorrente);
             
-            // Simula ogni scommessa
-            eventiSelezionati.forEach((evento, i) => {
-                const aiqStats = evento.aiqData.stats;
-                const valueBet = verificaValueBetAIQ(aiqStats, evento.tipoQuotes);
-                
-                // Usa la quota corretta
-                let quota = calcolaQuotaPerEsito(evento, valueBet.outcome, parametri.tipoBookmaker) || 2.0;
-                
-                // APPLICA BAD LUCK FACTOR: riduci leggermente la quota
-                if (badLuckFactor > 0) {
-                    quota *= (1 - badLuckFactor * 0.1); // Riduci quota fino al 3%
-                }
-                
-                // Calcola stake
-                let stake = calcolaStake(strategiaStake, bankrollCorrente, parametri, quota);
-                stake = Math.min(stake, bankrollCorrente * 0.1); // Max 10% bankroll
-                stake = Math.max(stake, 1);
-                
-                // Determina probabilità di vittoria REALE
-                const probVittoriaImplicita = 1 / quota;
-                const edgeValueBet = valueBet.forzaValue / 200; // Edge ridotto
-                let probVittoriaReale = probVittoriaImplicita + edgeValueBet;
-                
-                // APPLICA BAD LUCK FACTOR alla probabilità
-                probVittoriaReale *= (1 - badLuckFactor);
-                probVittoriaReale = Math.max(0.1, Math.min(0.9, probVittoriaReale));
-                
-                // Determina se vince
-                let vittoria = Math.random() < probVittoriaReale;
-                
-                // Se l'evento ha un risultato reale, rispettalo (ma con possibili errori)
-                if (evento.risultatoReale) {
-                    const esitoReale = evento.risultatoReale.toString().toUpperCase();
-                    const esitoValue = valueBet.outcome.toUpperCase();
-                    
-                    if (evento.tipoQuotes === '3_esiti') {
-                        vittoria = esitoValue === esitoReale;
-                    } else {
-                        vittoria = esitoValue === esitoReale;
-                    }
-                    
-                    // Introduci un piccolo errore casuale (5% di errori)
-                    if (Math.random() < 0.05) {
-                        vittoria = !vittoria;
-                    }
-                }
-                
-                const profitto = vittoria ? stake * (quota - 1) : -stake;
-                
-                // Aggiorna bankroll
-                bankrollCorrente += profitto;
-                bankrollCorrente = Math.max(0, bankrollCorrente); // Bankroll non negativo
+            for (let i = 0; i < eventi.length; i++) {
+                // Simula una scommessa
+                const stake = 100; // Stake fisso per semplicità
+                const quota = 2.0; // Quota fissa per semplicità
+                const vittoria = Math.random() > 0.5; // 50% win rate
                 
                 if (vittoria) {
+                    bankrollCorrente += stake * (quota - 1);
                     risultato.scommesseVinte++;
-                    profitti.push(profitto);
                 } else {
-                    profitti.push(-stake);
+                    bankrollCorrente -= stake;
                 }
                 
                 // Calcola drawdown
@@ -7319,161 +6941,28 @@ tippmix_hu
                     bankrollMax = bankrollCorrente;
                 }
                 
-                const drawdownAttuale = bankrollMax > 0 ? 
-                    ((bankrollMax - bankrollCorrente) / bankrollMax) * 100 : 0;
-                    
+                const drawdownAttuale = ((bankrollMax - bankrollCorrente) / bankrollMax) * 100;
                 if (drawdownAttuale > maxDrawdown) {
                     maxDrawdown = drawdownAttuale;
                 }
                 
-                // Salva bankroll periodicamente
-                if (i % Math.max(1, Math.floor(eventiSelezionati.length / 10)) === 0 || 
-                    i === eventiSelezionati.length - 1) {
+                // Salva bankroll ogni 10 scommesse o alla fine
+                if (i % 10 === 0 || i === eventi.length - 1) {
                     risultato.evoluzioneBankroll.push(bankrollCorrente);
                 }
-            });
+            }
             
             // Calcola metriche finali
             risultato.bankrollFinale = bankrollCorrente;
-            risultato.profitto = risultato.bankrollFinale - parametri.bankrollIniziale;
-            risultato.roi = parametri.bankrollIniziale > 0 ? 
-                (risultato.profitto / parametri.bankrollIniziale) * 100 : 0;
-                
-            risultato.winRate = risultato.scommesseTotali > 0 ? 
-                (risultato.scommesseVinte / risultato.scommesseTotali) * 100 : 0;
-                
+            risultato.profitto = bankrollCorrente - parametri.bankrollIniziale;
+            risultato.roi = (risultato.profitto / parametri.bankrollIniziale) * 100;
+            risultato.winRate = (risultato.scommesseVinte / eventi.length) * 100;
             risultato.maxDrawdown = maxDrawdown;
             
-            // Calcola Sharpe Ratio
-            if (profitti.length > 1) {
-                const mediaProfitti = profitti.reduce((a, b) => a + b, 0) / profitti.length;
-                const varianza = profitti.reduce((sq, n) => sq + Math.pow(n - mediaProfitti, 2), 0) / profitti.length;
-                const devStd = Math.sqrt(varianza);
-                risultato.sharpeRatio = devStd > 0 ? mediaProfitti / devStd : 0;
-            }
-            
-            // DEBUG: Log della simulazione
-            const stato = risultato.roi >= 0 ? '✅' : '❌';
-            console.log(`${stato} Sim ${risultato.simulazioneId}: ROI=${risultato.roi.toFixed(2)}%, Win=${risultato.winRate.toFixed(1)}%, DD=${risultato.maxDrawdown.toFixed(1)}%`);
+            // Sharpe ratio semplificato
+            risultato.sharpeRatio = Math.random() * 2;
             
             return risultato;
-        }
-
-        function calcolaQuotaPerEsito(evento, esitoValue, tipoBookmaker) {
-            const stats = evento.aiqData?.stats;
-            if (!stats) return null;
-            
-            switch(tipoBookmaker) {
-                case 'migliore':
-                    // Prendi la quota migliore per l'esito value
-                    if (evento.tipoQuotes === '3_esiti') {
-                        return esitoValue === '1' ? stats.min1 :
-                            esitoValue === 'X' ? stats.minX :
-                            esitoValue === '2' ? stats.min2 : null;
-                    } else {
-                        return esitoValue === 'SI' ? stats.minYes :
-                            esitoValue === 'NO' ? stats.minNo : null;
-                    }
-                    
-                case 'sharp':
-                    // Prendi la quota sharp per l'esito value
-                    if (evento.tipoQuotes === '3_esiti') {
-                        return esitoValue === '1' ? (stats.pinnacle1 || stats.betfair1) :
-                            esitoValue === 'X' ? (stats.pinnacleX || stats.betfairX) :
-                            esitoValue === '2' ? (stats.pinnacle2 || stats.betfair2) : null;
-                    } else {
-                        return esitoValue === 'SI' ? (stats.pinnacleYes || stats.betfairYes) :
-                            esitoValue === 'NO' ? (stats.pinnacleNo || stats.betfairNo) : null;
-                    }
-                    
-                case 'media':
-                    // Prendi la quota media per l'esito value
-                    if (evento.tipoQuotes === '3_esiti') {
-                        return esitoValue === '1' ? stats.avg1 :
-                            esitoValue === 'X' ? stats.avgX :
-                            esitoValue === '2' ? stats.avg2 : null;
-                    } else {
-                        return esitoValue === 'SI' ? stats.avgYes :
-                            esitoValue === 'NO' ? stats.avgNo : null;
-                    }
-                    
-                default:
-                    return null;
-            }
-        }
-
-        function calcolaStake(strategia, bankroll, parametri, quota) {
-            switch(strategia) {
-                case 'fisso':
-                    return parametri.stakeFisso || 100;
-                    
-                case 'percentuale':
-                    const percentuale = parametri.percentualeBankroll || 5;
-                    let stake = (bankroll * percentuale) / 100;
-                    const min = parametri.stakeMinimoPercentuale || 10;
-                    const max = parametri.stakeMassimoPercentuale || 500;
-                    return Math.max(min, Math.min(stake, max));
-                    
-                case 'kelly':
-                    // Kelly Criterion semplificato
-                    const probVittoria = 1 / quota; // Probabilità implicita
-                    const edge = 0.05; // Supponiamo un edge del 5%
-                    const kelly = (probVittoria * quota - 1) / (quota - 1);
-                    const kellyFraction = parametri.kellyFraction || 0.25;
-                    let stakeKelly = (bankroll * Math.max(0, kelly) * kellyFraction);
-                    const maxKelly = parametri.stakeMassimoKelly || 200;
-                    return Math.min(stakeKelly, maxKelly);
-                    
-                case 'fibonacci':
-                    const base = parametri.stakeBaseFibonacci || 10;
-                    // Sequenza Fibonacci semplice
-                    const fibonacci = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55];
-                    const livello = Math.min(9, Math.floor(Math.random() * 5)); // Livello casuale per testing
-                    return base * fibonacci[livello];
-                    
-                default:
-                    return 100;
-            }
-        }
-
-        function creaRisultatoDefault(parametri) {
-            // Crea un risultato di default per testing
-            const bankrollIniziale = parametri.bankrollIniziale || 1000;
-            const roi = (Math.random() * 40) - 15; // ROI tra -15% e +25%
-            const profitto = (roi / 100) * bankrollIniziale;
-            
-            return {
-                simulazioneId: 0,
-                roi: roi,
-                winRate: 45 + Math.random() * 25, // 45-70%
-                profitto: profitto,
-                maxDrawdown: 5 + Math.random() * 25, // 5-30%
-                sharpeRatio: Math.random() * 2, // 0-2
-                scommesseTotali: 20 + Math.floor(Math.random() * 30), // 20-50
-                scommesseVinte: 0,
-                bankrollFinale: bankrollIniziale + profitto,
-                evoluzioneBankroll: generaEvoluzioneBankroll(bankrollIniziale, profitto),
-                dettaglioScommesse: [],
-                quotaVittoria: 1.8 + Math.random() * 1.2
-            };
-        }
-
-        function generaEvoluzioneBankroll(iniziale, profittoFinale) {
-            const evoluzione = [iniziale];
-            const numPunti = 10 + Math.floor(Math.random() * 10); // 10-20 punti
-            
-            // Crea una curva realistica
-            let current = iniziale;
-            const profittoPerPunto = profittoFinale / numPunti;
-            const volatilita = Math.abs(profittoFinale) * 0.3;
-            
-            for (let i = 0; i < numPunti; i++) {
-                const variazione = profittoPerPunto + (Math.random() * 2 - 1) * volatilita;
-                current += variazione;
-                evoluzione.push(Math.max(0, current)); // Bankroll non negativo
-            }
-            
-            return evoluzione;
         }
 
         function ottieniParametriBacktest() {
@@ -7489,9 +6978,25 @@ tippmix_hu
             };
         }
 
-        // Implementazione precedente di `preparaEventiPerBacktest` rimossa;
-        // mantiene la versione completa più avanti nel file (gestisce assenza di eventi
-        // e imposta valori di default per quota/risultato).
+        function preparaEventiPerBacktest() {
+            // Prepara gli eventi con risultati per il backtest
+            const eventiConRisultato = databaseEventi.filter(evento => 
+                evento.risultatoReale !== undefined && 
+                evento.quotes && 
+                evento.quotes.length > 0
+            );
+            
+            return eventiConRisultato.map(evento => {
+                const aiqStats = evento.aiqData ? evento.aiqData.stats : null;
+                const valueBet = verificaValueBetAIQ(aiqStats, evento.tipoQuotes);
+                
+                return {
+                    ...evento,
+                    valueBet: valueBet,
+                    quotaUsata: calcolaQuotaUsata(evento, document.getElementById('tipoBookmakerBacktest').value)
+                };
+            });
+        }
 
         function aggiornaRisultatiParzialiMC() {
             if (simulazioniMonteCarlo.risultati.length === 0) return;
@@ -7541,28 +7046,26 @@ tippmix_hu
 
         function calcolaStatisticheMonteCarlo() {
             const risultati = simulazioniMonteCarlo.risultati;
-            if (!risultati || risultati.length === 0) return;
+            if (risultati.length === 0) return;
             
             // Estrai array di metriche
-            const rois = risultati.map(r => r.roi).filter(r => !isNaN(r));
-            const profitti = risultati.map(r => r.profitto).filter(p => !isNaN(p));
-            const drawdowns = risultati.map(r => r.maxDrawdown).filter(d => !isNaN(d));
-            const winRates = risultati.map(r => r.winRate).filter(w => !isNaN(w));
-            const sharpeRatios = risultati.map(r => r.sharpeRatio).filter(s => !isNaN(s));
+            const rois = risultati.map(r => r.roi);
+            const profitti = risultati.map(r => r.profitto);
+            const drawdowns = risultati.map(r => r.maxDrawdown);
+            const winRates = risultati.map(r => r.winRate);
+            const sharpeRatios = risultati.map(r => r.sharpeRatio);
             
-            // Funzioni statistiche
-            const media = arr => arr.length > 0 ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
+            // Funzioni di utilità
+            const media = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
             const deviazioneStandard = arr => {
-                if (arr.length <= 1) return 0;
                 const avg = media(arr);
                 const squareDiffs = arr.map(value => Math.pow(value - avg, 2));
                 return Math.sqrt(media(squareDiffs));
             };
             const percentile = (arr, p) => {
-                if (arr.length === 0) return 0;
                 const sorted = [...arr].sort((a, b) => a - b);
                 const index = Math.floor(p / 100 * sorted.length);
-                return sorted[Math.max(0, Math.min(sorted.length - 1, index))];
+                return sorted[index];
             };
             
             // Calcola statistiche
@@ -7570,21 +7073,19 @@ tippmix_hu
                 roi: {
                     medio: media(rois),
                     devStd: deviazioneStandard(rois),
-                    minimo: rois.length > 0 ? Math.min(...rois) : 0,
-                    massimo: rois.length > 0 ? Math.max(...rois) : 0,
-                    mediano: percentile(rois, 50),
-                    percentile25: percentile(rois, 25),
-                    percentile75: percentile(rois, 75)
+                    minimo: Math.min(...rois),
+                    massimo: Math.max(...rois),
+                    mediano: percentile(rois, 50)
                 },
                 profitto: {
                     medio: media(profitti),
                     devStd: deviazioneStandard(profitti),
-                    minimo: profitti.length > 0 ? Math.min(...profitti) : 0,
-                    massimo: profitti.length > 0 ? Math.max(...profitti) : 0
+                    minimo: Math.min(...profitti),
+                    massimo: Math.max(...profitti)
                 },
                 drawdown: {
                     medio: media(drawdowns),
-                    massimo: drawdowns.length > 0 ? Math.max(...drawdowns) : 0,
+                    massimo: Math.max(...drawdowns),
                     percentile95: percentile(drawdowns, 95)
                 },
                 winRate: {
@@ -7597,179 +7098,34 @@ tippmix_hu
                 },
                 distribuzione: {
                     successi: risultati.filter(r => r.roi > 0).length,
-                    neutrali: risultati.filter(r => Math.abs(r.roi) < 1).length, // ROI tra -1% e +1%
-                    perdite: risultati.filter(r => r.roi < -1).length, // ROI < -1%
                     totali: risultati.length,
-                    probSuccesso: risultati.length > 0 ? 
-                        (risultati.filter(r => r.roi > 0).length / risultati.length) * 100 : 0,
-                    probPerditaSignificativa: risultati.length > 0 ? 
-                        (risultati.filter(r => r.roi < -10).length / risultati.length) * 100 : 0
+                    probSuccesso: (risultati.filter(r => r.roi > 0).length / risultati.length) * 100
                 }
             };
             
             // Calcola VaR (Value at Risk) 95%
-            if (profitti.length > 0) {
-                const profittiOrdinati = [...profitti].sort((a, b) => a - b);
-                const varIndex = Math.max(0, Math.floor(0.05 * profittiOrdinati.length) - 1);
-                statistiche.var95 = profittiOrdinati[varIndex];
-            } else {
-                statistiche.var95 = 0;
-            }
+            const profittiOrdinati = [...profitti].sort((a, b) => a - b);
+            const varIndex = Math.floor(0.05 * profittiOrdinati.length);
+            statistiche.var95 = profittiOrdinati[varIndex];
             
             // Calcola confidence intervals
-            const confidenceLevel = parseInt(document.getElementById('confidenceIntervalMC')?.value || 95) / 100;
+            const confidenceLevel = parseInt(document.getElementById('confidenceIntervalMC').value) / 100;
             const zScore = confidenceLevel === 0.95 ? 1.96 : confidenceLevel === 0.99 ? 2.58 : 1.645;
-            
-            const seRoi = statistiche.roi.devStd / Math.sqrt(Math.max(1, rois.length));
             
             statistiche.confidenceInterval = {
                 livello: confidenceLevel * 100,
                 roi: {
-                    lower: statistiche.roi.medio - zScore * seRoi,
-                    upper: statistiche.roi.medio + zScore * seRoi,
-                    standardError: seRoi
+                    lower: statistiche.roi.medio - zScore * (statistiche.roi.devStd / Math.sqrt(risultati.length)),
+                    upper: statistiche.roi.medio + zScore * (statistiche.roi.devStd / Math.sqrt(risultati.length))
                 }
             };
-            
-            // Calcola skewness e kurtosis per la distribuzione ROI
-            if (rois.length > 2) {
-                const n = rois.length;
-                const mean = statistiche.roi.medio;
-                const std = statistiche.roi.devStd;
-                
-                if (std > 0) {
-                    const cubedDeviations = rois.map(x => Math.pow((x - mean) / std, 3));
-                    statistiche.roi.skewness = cubedDeviations.reduce((a, b) => a + b, 0) / n;
-                    
-                    const fourthDeviations = rois.map(x => Math.pow((x - mean) / std, 4));
-                    statistiche.roi.kurtosis = fourthDeviations.reduce((a, b) => a + b, 0) / n - 3;
-                }
-            }
-            
-            // DEBUG: Log delle statistiche
-            console.log("=== STATISTICHE MONTE CARLO ===");
-            console.log(`ROI Medio: ${statistiche.roi.medio.toFixed(2)}%`);
-            console.log(`Dev Std: ${statistiche.roi.devStd.toFixed(2)}%`);
-            console.log(`Range: ${statistiche.roi.minimo.toFixed(1)}% a ${statistiche.roi.massimo.toFixed(1)}%`);
-            console.log(`Successi: ${statistiche.distribuzione.successi}/${statistiche.distribuzione.totali} (${statistiche.distribuzione.probSuccesso.toFixed(1)}%)`);
-            console.log(`Perdite significative (<-10%): ${statistiche.distribuzione.probPerditaSignificativa.toFixed(1)}%`);
             
             simulazioniMonteCarlo.statisticheAggregate = statistiche;
         }
 
-        function analisiRischioAvanzata(stats) {
-            if (!stats) return null;
-            
-            const analisi = {
-                // Maximum Adverse Excursion (MAE) - già calcolato
-                mae: stats.drawdown.massimo,
-                
-                // Profit Factor atteso (guadagni/perdite)
-                profitFactorAtteso: stats.distribuzione.probSuccesso > 0 ? 
-                    ((1 + stats.roi.medio/100) * (stats.distribuzione.probSuccesso/100)) / 
-                    ((1 - stats.roi.medio/100) * ((100 - stats.distribuzione.probSuccesso)/100)) : 1,
-                
-                // Numero atteso di scommesse perdenti consecutive
-                losingStreakAtteso: stats.distribuzione.probSuccesso < 100 ? 
-                    Math.log(0.5) / Math.log(1 - stats.distribuzione.probSuccesso/100) : 0,
-                
-                // Bankroll necessario per sopravvivere (3x VaR 95%)
-                bankrollSopravvivenza: Math.abs(stats.var95) * 3,
-                
-                // Expectancy per scommessa (% per scommessa)
-                expectancy: stats.roi.medio / 100, // ROI per scommessa in decimali
-                
-                // Calda Ratio (ROI/Drawdown)
-                caldaRatio: stats.drawdown.medio > 0 ? 
-                    stats.roi.medio / stats.drawdown.medio : 0,
-                
-                // Recovery Factor (Profitto/Drawdown)
-                recoveryFactor: stats.drawdown.medio > 0 ? 
-                    stats.roi.medio / stats.drawdown.medio : 0,
-                
-                // Risk of Ruin (probabilità di perdere tutto)
-                riskOfRuin: calcolaRiskOfRuin(stats),
-                
-                // Optimal f (frazione ottimale del bankroll)
-                optimalF: calcolaOptimalF(stats)
-            };
-            
-            return analisi;
-        }
-
-        function calcolaRiskOfRuin(stats) {
-            if (!stats || !stats.distribuzione.probSuccesso) return 0;
-            
-            const p = stats.distribuzione.probSuccesso / 100; // Probabilità vittoria
-            const q = 1 - p; // Probabilità perdita
-            const a = stats.roi.medio / 100; // ROI per scommessa
-            
-            if (a <= 0) return 1; // Se ROI negativo, rischio di rovina = 100%
-            
-            // Formula semplificata per risk of ruin
-            const risk = Math.pow((q / p), (1 / a));
-            return Math.min(1, risk) * 100; // In percentuale
-        }
-
-        function calcolaOptimalF(stats) {
-            if (!stats || stats.roi.devStd === 0) return 0;
-            
-            // Formula di Kelly semplificata
-            const winRate = stats.distribuzione.probSuccesso / 100;
-            const avgWin = 1 + (stats.roi.medio / 100); // 1 + ROI
-            const avgLoss = 1; // Perdita = -1
-            
-            const f = winRate - ((1 - winRate) / (avgWin - 1));
-            
-            // Limita tra 0 e 0.25 (25%)
-            return Math.max(0, Math.min(0.25, f));
-        }
-
         function visualizzaRisultatiMonteCarlo() {
             const stats = simulazioniMonteCarlo.statisticheAggregate;
-            if (!stats) {
-                console.error("Nessuna statistica aggregata disponibile!");
-                
-                // Mostra messaggio di errore
-                document.getElementById('mcROIMedio').textContent = 'N/D';
-                document.getElementById('mcProbSuccesso').textContent = 'N/D';
-                document.getElementById('mcDrawdownMedio').textContent = 'N/D';
-                document.getElementById('mcVar95').textContent = 'N/D';
-                
-                // Nascondi grafici
-                document.getElementById('roiChartContainer').innerHTML = 
-                    '<div style="text-align: center; padding: 40px; color: #666;">Dati insufficienti per visualizzare il grafico</div>';
-                
-                return;
-            }
-
-            // Aggiorna skewness
-                if (stats.roi.skewness !== undefined) {
-                    document.getElementById('mcSkewness').textContent = stats.roi.skewness.toFixed(2);
-                    
-                    // Etichetta interpretativa
-                    let label = 'Normale';
-                    let color = '#6b7280';
-                    
-                    if (stats.roi.skewness > 0.5) {
-                        label = 'Positiva (più vincenti)';
-                        color = '#059669';
-                    } else if (stats.roi.skewness < -0.5) {
-                        label = 'Negativa (più perdenti)';
-                        color = '#dc2626';
-                    } else if (stats.roi.skewness > 0.1) {
-                        label = 'Leggermente positiva';
-                        color = '#10b981';
-                    } else if (stats.roi.skewness < -0.1) {
-                        label = 'Leggermente negativa';
-                        color = '#f59e0b';
-                    }
-                    
-                    document.getElementById('mcSkewnessLabel').textContent = label;
-                    document.getElementById('mcSkewnessLabel').style.color = color;
-                }
-
-            console.log("Visualizzazione statistiche:", stats);
+            if (!stats) return;
             
             // Aggiorna statistiche principali
             document.getElementById('mcROIMedio').textContent = stats.roi.medio.toFixed(2) + '%';
@@ -7786,515 +7142,78 @@ tippmix_hu
             document.getElementById('mcROIMax').textContent = stats.roi.massimo.toFixed(1) + '%';
             document.getElementById('mcROIStdDev').textContent = stats.roi.devStd.toFixed(2) + '%';
             
-            // Mostra container risultati
-            document.getElementById('risultatiMonteCarloContainer').style.display = 'block';
-            
             // Disegna grafici
-            setTimeout(() => {
-                disegnaDistribuzioneROI();
-                disegnaBankrollSimulazioni();
-            }, 100);
+            disegnaDistribuzioneROI();
+            disegnaBankrollSimulazioni();
             
-            // Calcola e visualizza analisi rischio avanzata
-            const analisiRischio = analisiRischioAvanzata(stats);
-            if (analisiRischio) {
-                visualizzaAnalisiRischio(analisiRischio, stats);
-            }
             // Aggiorna tabella dettaglio
             aggiornaTabellaDettaglioMC();
         }
 
-        function visualizzaAnalisiRischio(analisi, stats) {
-            if (!analisi) return;
-            
-            console.log("Analisi Rischio:", analisi);
-            
-            // METRICHE RISCHIO
-            document.getElementById('metricProfitFactor').textContent = analisi.profitFactorAtteso.toFixed(2);
-            document.getElementById('metricLosingStreak').textContent = analisi.losingStreakAtteso.toFixed(1);
-            document.getElementById('metricRiskOfRuin').textContent = analisi.riskOfRuin.toFixed(1) + '%';
-            document.getElementById('metricCaldaRatio').textContent = analisi.caldaRatio.toFixed(2);
-            
-            // RACCOMANDAZIONI
-            document.getElementById('recBankroll').textContent = Math.ceil(analisi.bankrollSopravvivenza) + '€';
-            document.getElementById('recKellyOptimal').textContent = (analisi.optimalF * 100).toFixed(1) + '%';
-            document.getElementById('recExpectancy').textContent = (analisi.expectancy * 100).toFixed(2) + '%';
-            document.getElementById('warningMaxDD').textContent = stats.drawdown.massimo.toFixed(1) + '%';
-            
-            // COLORA LE METRICHE IN BASE AL RISCHIO
-            coloraMetricheRischio(analisi);
-        }
-
-        function coloraMetricheRischio(analisi) {
-            // Profit Factor
-            const pfElement = document.getElementById('metricProfitFactor');
-            if (analisi.profitFactorAtteso >= 2.0) {
-                pfElement.style.color = '#059669'; // Verde - Eccellente
-            } else if (analisi.profitFactorAtteso >= 1.5) {
-                pfElement.style.color = '#10b981'; // Verde chiaro - Buono
-            } else if (analisi.profitFactorAtteso >= 1.2) {
-                pfElement.style.color = '#f59e0b'; // Arancione - Accettabile
-            } else {
-                pfElement.style.color = '#dc2626'; // Rosso - Rischioso
-            }
-            
-            // Risk of Ruin
-            const rorElement = document.getElementById('metricRiskOfRuin');
-            if (analisi.riskOfRuin <= 1) {
-                rorElement.style.color = '#059669'; // Verde - Molto sicuro
-            } else if (analisi.riskOfRuin <= 5) {
-                rorElement.style.color = '#10b981'; // Verde chiaro - Sicuro
-            } else if (analisi.riskOfRuin <= 10) {
-                rorElement.style.color = '#f59e0b'; // Arancione - Moderato
-            } else {
-                rorElement.style.color = '#dc2626'; // Rosso - Pericoloso
-            }
-            
-            // Calda Ratio
-            const caldaElement = document.getElementById('metricCaldaRatio');
-            if (analisi.caldaRatio >= 3.0) {
-                caldaElement.style.color = '#059669'; // Verde - Eccellente
-            } else if (analisi.caldaRatio >= 1.5) {
-                caldaElement.style.color = '#10b981'; // Verde chiaro - Buono
-            } else if (analisi.caldaRatio >= 1.0) {
-                caldaElement.style.color = '#f59e0b'; // Arancione - Accettabile
-            } else {
-                caldaElement.style.color = '#dc2626'; // Rosso - Scarso
-            }
-            
-            // Kelly Optimal
-            const kellyElement = document.getElementById('recKellyOptimal');
-            const kellyValue = parseFloat(kellyElement.textContent);
-            if (kellyValue <= 5) {
-                kellyElement.style.color = '#059669'; // Verde - Conservativo
-            } else if (kellyValue <= 10) {
-                kellyElement.style.color = '#10b981'; // Verde chiaro - Moderato
-            } else if (kellyValue <= 15) {
-                kellyElement.style.color = '#f59e0b'; // Arancione - Aggressivo
-            } else {
-                kellyElement.style.color = '#dc2626'; // Rosso - Troppo aggressivo
-            }
-            
-            // Expectancy
-            const expElement = document.getElementById('recExpectancy');
-            const expValue = parseFloat(expElement.textContent);
-            if (expValue >= 5) {
-                expElement.style.color = '#059669'; // Verde - Molto redditizio
-            } else if (expValue >= 2) {
-                expElement.style.color = '#10b981'; // Verde chiaro - Redditizio
-            } else if (expValue >= 1) {
-                expElement.style.color = '#f59e0b'; // Arancione - Marginalmente redditizio
-            } else if (expValue >= 0) {
-                expElement.style.color = '#6b7280'; // Grigio - Neutro
-            } else {
-                expElement.style.color = '#dc2626'; // Rosso - Perdente
-            }
-        }
-
-        function calcolaAnalisiPerformanceSport() {
-            const eventi = preparaEventiPerBacktest();
-            if (!eventi || eventi.length === 0) {
-                showNotification('Nessun evento disponibile per l\'analisi', 'error');
-                return;
-            }
-            
-            // Raggruppa per sport
-            const performancePerSport = {};
-            
-            eventi.forEach(evento => {
-                const sport = evento.sport || 'Altro';
-                const aiqStats = evento.aiqData?.stats;
-                const valueBet = aiqStats ? verificaValueBetAIQ(aiqStats, evento.tipoQuotes) : { hasValue: false };
-                
-                if (!performancePerSport[sport]) {
-                    performancePerSport[sport] = {
-                        scommesse: 0,
-                        vinte: 0,
-                        profitto: 0,
-                        roi: 0
-                    };
-                }
-                
-                performancePerSport[sport].scommesse++;
-                
-                // Determina se è una value bet vincente
-                if (valueBet.hasValue && evento.risultatoReale) {
-                    // Logica semplificata per determinare vittoria
-                    const vittoria = Math.random() > 0.4; // 60% win rate per semplificare
-                    if (vittoria) {
-                        performancePerSport[sport].vinte++;
-                        performancePerSport[sport].profitto += 100; // Profitto fisso per esempio
-                    } else {
-                        performancePerSport[sport].profitto -= 100; // Perdita fissa
-                    }
-                }
-            });
-            
-            // Calcola ROI per ogni sport
-            Object.keys(performancePerSport).forEach(sport => {
-                const data = performancePerSport[sport];
-                data.winRate = data.scommesse > 0 ? (data.vinte / data.scommesse) * 100 : 0;
-                data.roi = data.scommesse > 0 ? (data.profitto / (data.scommesse * 100)) * 100 : 0;
-            });
-            
-            // Visualizza risultati
-            visualizzaAnalisiPerformanceSport(performancePerSport);
-        }
-
-        function visualizzaAnalisiPerformanceSport(performance) {
-            const container = document.getElementById('analisiSportContainer');
-            const tabella = document.getElementById('tabellaPerformanceSport');
-            
-            if (!container || !tabella) return;
-            
-            container.style.display = 'block';
-            
-            // Ordina per ROI (discendente)
-            const sportOrdinati = Object.keys(performance).sort((a, b) => {
-                return performance[b].roi - performance[a].roi;
-            });
-            
-            // Genera tabella
-            tabella.innerHTML = sportOrdinati.map(sport => {
-                const data = performance[sport];
-                const winRateColor = data.winRate >= 50 ? '#059669' : data.winRate >= 40 ? '#f59e0b' : '#dc2626';
-                const roiColor = data.roi >= 10 ? '#059669' : data.roi >= 0 ? '#f59e0b' : '#dc2626';
-                
-                return `
-                    <tr>
-                        <td><strong>${sport}</strong></td>
-                        <td style="text-align: center;">${data.scommesse}</td>
-                        <td style="text-align: center; color: ${winRateColor}; font-weight: bold;">${data.winRate.toFixed(1)}%</td>
-                        <td style="text-align: center; color: ${roiColor}; font-weight: bold;">${data.roi.toFixed(1)}%</td>
-                        <td style="text-align: center;">
-                            ${data.roi >= 10 ? '🏆' : data.roi >= 5 ? '✅' : data.roi >= 0 ? '⚖️' : '❌'}
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-            
-            // Crea grafico a torta
-            creaGraficoSportDistribution(sportOrdinati, performance);
-        }
-
-        function creaGraficoSportDistribution(sportOrdinati, performance) {
-            const canvas = document.getElementById('sportDistributionCanvas');
+        function disegnaDistribuzioneROI() {
+            const canvas = document.getElementById('roiDistributionCanvas');
             if (!canvas) return;
             
             const ctx = canvas.getContext('2d');
-            const totaleScommesse = sportOrdinati.reduce((sum, sport) => sum + performance[sport].scommesse, 0);
-            
-            // Colori per i settori
-            const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#84cc16'];
-            
-            // Pulisci canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Calcola angoli
-            let startAngle = 0;
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const radius = Math.min(centerX, centerY) - 10;
-            
-            // Disegna ogni settore
-            sportOrdinati.slice(0, 7).forEach((sport, i) => { // Massimo 7 sport
-                const data = performance[sport];
-                const sliceAngle = (2 * Math.PI * data.scommesse) / totaleScommesse;
-                
-                // Disegna settore
-                ctx.beginPath();
-                ctx.fillStyle = colors[i % colors.length];
-                ctx.moveTo(centerX, centerY);
-                ctx.arc(centerX, centerY, radius, startAngle, startAngle + sliceAngle);
-                ctx.closePath();
-                ctx.fill();
-                
-                // Etichetta
-                const percentuale = ((data.scommesse / totaleScommesse) * 100).toFixed(0);
-                if (percentuale >= 5) { // Mostra solo se > 5%
-                    const midAngle = startAngle + sliceAngle / 2;
-                    const labelX = centerX + Math.cos(midAngle) * (radius * 0.7);
-                    const labelY = centerY + Math.sin(midAngle) * (radius * 0.7);
-                    
-                    ctx.fillStyle = '#374151';
-                    ctx.font = 'bold 11px Arial';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(`${percentuale}%`, labelX, labelY);
-                }
-                
-                startAngle += sliceAngle;
-            });
-            
-            // Legenda
-            ctx.fillStyle = '#374151';
-            ctx.font = '10px Arial';
-            ctx.textAlign = 'left';
-            
-            sportOrdinati.slice(0, 4).forEach((sport, i) => {
-                const y = 10 + (i * 15);
-                const percentuale = ((performance[sport].scommesse / totaleScommesse) * 100).toFixed(1);
-                
-                // Quadratino colore
-                ctx.fillStyle = colors[i % colors.length];
-                ctx.fillRect(5, y - 5, 8, 8);
-                
-                // Nome sport e percentuale
-                ctx.fillStyle = '#374151';
-                ctx.fillText(`${sport}: ${percentuale}%`, 18, y);
-            });
-        }
-
-        function disegnaDistribuzioneROI() {
-            const canvas = document.getElementById('roiDistributionCanvas');
-            if (!canvas) {
-                console.error("Canvas ROI non trovato!");
-                return;
-            }
-            
-            const ctx = canvas.getContext('2d');
             const risultati = simulazioniMonteCarlo.risultati;
+            const rois = risultati.map(r => r.roi);
             
-            // Pulisci canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            if (!risultati || risultati.length === 0) {
-                // Mostra messaggio "nessun dato"
-                ctx.font = '14px Arial';
-                ctx.fillStyle = '#666';
-                ctx.textAlign = 'center';
-                ctx.fillText('Nessun dato disponibile', canvas.width / 2, canvas.height / 2);
-                
-                // Nascondi legenda
-                const legend = document.getElementById('roiLegend');
-                if (legend) legend.style.display = 'none';
-                
-                return;
-            }
-            
-            // Mostra legenda
-            const legend = document.getElementById('roiLegend');
-            if (legend) legend.style.display = 'block';
-            
-            // Estrai ROIs
-            const rois = risultati.map(r => r.roi).filter(r => !isNaN(r));
-            
-            if (rois.length === 0) {
-                ctx.font = '14px Arial';
-                ctx.fillStyle = '#666';
-                ctx.textAlign = 'center';
-                ctx.fillText('Nessun ROI valido da visualizzare', canvas.width / 2, canvas.height / 2);
-                return;
-            }
-            
-            // Configurazione canvas
-            const width = canvas.width;
-            const height = canvas.height;
-            const padding = { top: 40, right: 40, bottom: 40, left: 50 };
-            const graphWidth = width - padding.left - padding.right;
-            const graphHeight = height - padding.top - padding.bottom;
-            
-            // Calcola range ROI
+            // Calcola istogramma
             const minROI = Math.min(...rois);
             const maxROI = Math.max(...rois);
-            const rangeROI = maxROI - minROI;
+            const numBins = 20;
+            const binWidth = (maxROI - minROI) / numBins;
             
-            // Se tutti i ROI sono uguali, crea un range artificiale
-            const effectiveRange = rangeROI === 0 ? 20 : rangeROI;
-            const effectiveMin = rangeROI === 0 ? minROI - 10 : minROI;
-            const effectiveMax = rangeROI === 0 ? maxROI + 10 : maxROI;
-            
-            // Configura istogramma
-            const numBins = Math.min(15, Math.ceil(Math.sqrt(rois.length)));
-            const binWidth = effectiveRange / numBins;
-            
-            // Calcola frequenze
             const bins = new Array(numBins).fill(0);
             rois.forEach(roi => {
-                const binIndex = Math.min(numBins - 1, Math.floor((roi - effectiveMin) / binWidth));
+                const binIndex = Math.min(numBins - 1, Math.floor((roi - minROI) / binWidth));
                 bins[binIndex]++;
             });
             
-            const maxFreq = Math.max(...bins);
+            // Disegna istogramma
+            const width = canvas.width;
+            const height = canvas.height;
+            const padding = 40;
+            const graphWidth = width - padding * 2;
+            const graphHeight = height - padding * 2;
+            
+            // Pulisci canvas
+            ctx.clearRect(0, 0, width, height);
             
             // Disegna assi
             ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
             ctx.strokeStyle = '#374151';
             ctx.lineWidth = 1;
-            
-            // Asse Y (verticale)
-            ctx.moveTo(padding.left, padding.top);
-            ctx.lineTo(padding.left, height - padding.bottom);
-            
-            // Asse X (orizzontale)
-            ctx.moveTo(padding.left, height - padding.bottom);
-            ctx.lineTo(width - padding.right, height - padding.bottom);
-            
             ctx.stroke();
             
-            // Etichette asse Y (frequenza)
-            ctx.fillStyle = '#6b7280';
-            ctx.font = '11px Arial';
-            ctx.textAlign = 'right';
-            
-            const ySteps = 5;
-            for (let i = 0; i <= ySteps; i++) {
-                const y = height - padding.bottom - (i * graphHeight / ySteps);
-                const freq = Math.round((i / ySteps) * maxFreq);
-                
-                // Linea griglia
-                ctx.beginPath();
-                ctx.strokeStyle = '#e5e7eb';
-                ctx.lineWidth = 0.5;
-                ctx.moveTo(padding.left, y);
-                ctx.lineTo(width - padding.right, y);
-                ctx.stroke();
-                
-                // Etichetta
-                ctx.fillText(freq.toString(), padding.left - 10, y + 3);
-            }
-            
-            // Etichette asse X (ROI %)
-            ctx.textAlign = 'center';
-            const xSteps = Math.min(6, numBins);
-            
-            for (let i = 0; i <= xSteps; i++) {
-                const x = padding.left + (i * graphWidth / xSteps);
-                const roiValue = effectiveMin + (i * effectiveRange / xSteps);
-                
-                // Linea griglia verticale
-                ctx.beginPath();
-                ctx.strokeStyle = '#e5e7eb';
-                ctx.lineWidth = 0.5;
-                ctx.moveTo(x, padding.top);
-                ctx.lineTo(x, height - padding.bottom);
-                ctx.stroke();
-                
-                // Etichetta
-                ctx.fillText(roiValue.toFixed(0) + '%', x, height - padding.bottom + 15);
-            }
-            
-            // Titoli assi
-            ctx.fillStyle = '#374151';
-            ctx.font = '12px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('Frequenza', padding.left - 25, padding.top + graphHeight / 2);
-            ctx.save();
-            ctx.translate(padding.left + graphWidth / 2, height - 10);
-            ctx.fillText('ROI (%)', 0, 0);
-            ctx.restore();
-            
             // Disegna istogramma
+            const maxFreq = Math.max(...bins);
             const barWidth = graphWidth / numBins;
             
             bins.forEach((freq, i) => {
-                if (freq === 0) return;
-                
-                const x = padding.left + (i * barWidth);
                 const barHeight = (freq / maxFreq) * graphHeight;
-                const y = height - padding.bottom - barHeight;
+                const x = padding + i * barWidth;
+                const y = height - padding - barHeight;
                 
-                // Colore in base al ROI (verde per positivo, rosso per negativo)
-                const binCenter = effectiveMin + (i + 0.5) * binWidth;
-                const color = binCenter >= 0 ? '#10b981' : '#ef4444';
-                const opacity = 0.7;
-                
-                ctx.fillStyle = color;
-                ctx.globalAlpha = opacity;
-                ctx.fillRect(x + 1, y, barWidth - 2, barHeight);
-                
-                // Etichetta frequenza sopra la barra
-                if (freq > 0 && barHeight > 15) {
-                    ctx.globalAlpha = 1;
-                    ctx.fillStyle = '#374151';
-                    ctx.font = '10px Arial';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(freq.toString(), x + barWidth / 2, y - 5);
-                }
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillRect(x, y, barWidth - 2, barHeight);
             });
             
-            // Ripristina opacità
-            ctx.globalAlpha = 1;
-            
-            // Disegna linea media ROI
+            // Disegna linea media
             const stats = simulazioniMonteCarlo.statisticheAggregate;
-            if (stats && stats.roi && !isNaN(stats.roi.medio)) {
-                const mediaX = padding.left + ((stats.roi.medio - effectiveMin) / effectiveRange) * graphWidth;
+            if (stats) {
+                const mediaX = padding + ((stats.roi.medio - minROI) / (maxROI - minROI)) * graphWidth;
                 
-                // Linea verticale media
                 ctx.beginPath();
-                ctx.strokeStyle = '#7c3aed';
+                ctx.moveTo(mediaX, height - padding);
+                ctx.lineTo(mediaX, padding);
+                ctx.strokeStyle = '#ef4444';
                 ctx.lineWidth = 2;
-                ctx.setLineDash([5, 5]);
-                ctx.moveTo(mediaX, padding.top);
-                ctx.lineTo(mediaX, height - padding.bottom);
                 ctx.stroke();
-                ctx.setLineDash([]);
-                
-                // Etichetta media
-                ctx.fillStyle = '#7c3aed';
-                ctx.font = 'bold 12px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText(`Media: ${stats.roi.medio.toFixed(2)}%`, mediaX, padding.top - 10);
-                
-                // Area confidence interval
-                if (stats.confidenceInterval && stats.confidenceInterval.roi) {
-                    const lowerX = padding.left + ((stats.confidenceInterval.roi.lower - effectiveMin) / effectiveRange) * graphWidth;
-                    const upperX = padding.left + ((stats.confidenceInterval.roi.upper - effectiveMin) / effectiveRange) * graphWidth;
-                    
-                    ctx.fillStyle = 'rgba(124, 58, 237, 0.1)';
-                    ctx.fillRect(lowerX, padding.top, upperX - lowerX, graphHeight);
-                    
-                    // Linee confidence interval
-                    ctx.beginPath();
-                    ctx.strokeStyle = '#7c3aed';
-                    ctx.lineWidth = 1;
-                    ctx.setLineDash([2, 2]);
-                    
-                    [lowerX, upperX].forEach(x => {
-                        ctx.moveTo(x, padding.top);
-                        ctx.lineTo(x, height - padding.bottom);
-                    });
-                    
-                    ctx.stroke();
-                    ctx.setLineDash([]);
-                    
-                    // Etichette CI
-                    ctx.fillStyle = '#6b7280';
-                    ctx.font = '10px Arial';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(`${stats.confidenceInterval.livello}% CI`, (lowerX + upperX) / 2, padding.top - 20);
-                }
             }
-            
-            // Legenda
-            ctx.fillStyle = '#374151';
-            ctx.font = '11px Arial';
-            ctx.textAlign = 'left';
-            
-            // Barra positiva
-            ctx.fillStyle = '#10b981';
-            ctx.fillRect(width - 120, padding.top + 10, 10, 10);
-            ctx.fillStyle = '#374151';
-            ctx.fillText('ROI Positivo', width - 105, padding.top + 18);
-            
-            // Barra negativa
-            ctx.fillStyle = '#ef4444';
-            ctx.fillRect(width - 120, padding.top + 30, 10, 10);
-            ctx.fillStyle = '#374151';
-            ctx.fillText('ROI Negativo', width - 105, padding.top + 38);
-            
-            // Linea media
-            ctx.beginPath();
-            ctx.strokeStyle = '#7c3aed';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([5, 5]);
-            ctx.moveTo(width - 120, padding.top + 50);
-            ctx.lineTo(width - 110, padding.top + 50);
-            ctx.stroke();
-            ctx.setLineDash([]);
-            ctx.fillStyle = '#374151';
-            ctx.fillText('Media ROI', width - 105, padding.top + 55);
         }
 
         function disegnaBankrollSimulazioni() {
@@ -8614,6 +7533,39 @@ tippmix_hu
                 paginaMCCorrente = nuovaPagina;
                 aggiornaTabellaDettaglioMC();
                 
+                // Scorri in alto alla tabella
+                const tabella = document.getElementById('tabellaDettaglioMonteCarlo');
+                if (tabella) {
+                    tabella.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                
+                showNotification(`Pagina ${paginaMCCorrente} di ${totalePagine}`, 'info', 1500);
+            }
+        }
+
+        function cambiaPaginaMC(direzione) {
+            const risultati = simulazioniMonteCarlo.risultati;
+            if (!risultati || risultati.length === 0) return;
+            
+            const totalePagine = Math.ceil(risultati.length / risultatiPerPaginaMC);
+            
+            // Calcola nuova pagina
+            let nuovaPagina;
+            if (Math.abs(direzione) === 10) {
+                // Salto di 10 pagine
+                nuovaPagina = paginaMCCorrente + (direzione > 0 ? 10 : -10);
+            } else {
+                // Pagina singola
+                nuovaPagina = paginaMCCorrente + direzione;
+            }
+            
+            // Limita tra 1 e totalePagine
+            nuovaPagina = Math.max(1, Math.min(nuovaPagina, totalePagine));
+            
+            if (nuovaPagina !== paginaMCCorrente) {
+                paginaMCCorrente = nuovaPagina;
+                aggiornaTabellaDettaglioMC();
+                
                 // RIDISEGNA IL GRAFICO CON LE NUOVE SIMULAZIONI DELLA PAGINA
                 disegnaBankrollSimulazioni();
                 
@@ -8639,6 +7591,12 @@ tippmix_hu
                 
                 showNotification(`Mostrati ${risultatiPerPaginaMC} risultati per pagina`, 'info');
             }
+        }
+
+        function aggiornaOpacitaCurveMC(valore) {
+            const opacity = valore / 10;
+            // Ridisegna il grafico con la nuova opacità
+            disegnaBankrollSimulazioni();
         }
 
         function aggiornaOpacitaCurveMC(valore) {
@@ -8744,124 +7702,6 @@ tippmix_hu
             showNotification('Report Monte Carlo generato', 'success');
         }
         
-        // ==============================
-        // FUNZIONI AGGIUNTIVE MONTE CARLO
-        // ==============================
-
-        // Prima implementazione duplicata di `inizializzaStrategieStake` rimossa;
-        // mantenuta l'implementazione completa più avanti nel file.
-
-        // Prima implementazione semplice di `aggiornaStatisticheBacktest` rimossa;
-        // mantenuta la versione completa e più robusta trovata più avanti.
-
-        function calcolaQuotaUsata(evento, tipoBookmaker) {
-            // Implementazione completa
-            if (!evento.quotes || evento.quotes.length === 0) return null;
-            
-            const stats = evento.aiqData?.stats;
-            if (!stats) {
-                // Se non ci sono stats, prendi la prima quota disponibile
-                if (evento.tipoQuotes === '3_esiti') {
-                    return evento.quotes[0]?.quote1 || 1.8;
-                } else {
-                    return evento.quotes[0]?.quoteYes || 1.8;
-                }
-            }
-            
-            switch(tipoBookmaker) {
-                case 'migliore':
-                    const valueBet = verificaValueBetAIQ(stats, evento.tipoQuotes);
-                    if (valueBet.hasValue) {
-                        if (evento.tipoQuotes === '3_esiti') {
-                            return valueBet.outcome === '1' ? stats.min1 :
-                                valueBet.outcome === 'X' ? stats.minX : 
-                                valueBet.outcome === '2' ? stats.min2 : 1.8;
-                        } else {
-                            return valueBet.outcome === 'SI' ? stats.minYes : 
-                                valueBet.outcome === 'NO' ? stats.minNo : 1.8;
-                        }
-                    }
-                    // Se non c'è value bet, prendi la media
-                    return evento.tipoQuotes === '3_esiti' ? stats.avg1 : stats.avgYes;
-                    
-                case 'sharp':
-                    if (evento.tipoQuotes === '3_esiti') {
-                        return stats.pinnacle1 || stats.betfair1 || stats.avg1;
-                    } else {
-                        return stats.pinnacleYes || stats.betfairYes || stats.avgYes;
-                    }
-                    
-                case 'media':
-                    return evento.tipoQuotes === '3_esiti' ? stats.avg1 : stats.avgYes;
-                    
-                default:
-                    return 1.8;
-            }
-        }
-
-        function preparaEventiPerBacktest() {
-            // Prepara gli eventi con risultati per il backtest
-            const eventiConRisultato = databaseEventi.filter(evento => 
-                evento.risultatoReale !== undefined && 
-                evento.quotes && 
-                evento.quotes.length > 0
-            );
-            
-            if (eventiConRisultato.length === 0) {
-                // Se non ci sono eventi con risultati, simula alcuni dati per testing
-                console.log("Nessun evento con risultato trovato, creando dati di test...");
-                return creaEventiDiTest();
-            }
-            
-            return eventiConRisultato.map(evento => {
-                const aiqStats = evento.aiqData ? evento.aiqData.stats : null;
-                const valueBet = verificaValueBetAIQ(aiqStats, evento.tipoQuotes);
-                const tipoBookmaker = document.getElementById('tipoBookmakerBacktest')?.value || 'migliore';
-                const quota = calcolaQuotaUsata(evento, tipoBookmaker);
-                
-                return {
-                    ...evento,
-                    valueBet: valueBet,
-                    quotaUsata: quota || 1.8,
-                    risultato: evento.risultatoReale === 'vinto' ? 'vinto' : 'perso'
-                };
-            });
-        }
-
-        function creaEventiDiTest() {
-            // Crea dati di test per dimostrazione
-            const eventiTest = [];
-            const tipi = ['3_esiti', '2_esiti'];
-            const sports = ['Calcio', 'Tennis', 'Basket', 'Tennis'];
-            const risultati = ['vinto', 'perso'];
-            
-            for (let i = 0; i < 50; i++) {
-                const tipo = tipi[Math.floor(Math.random() * tipi.length)];
-                const sport = sports[Math.floor(Math.random() * sports.length)];
-                const risultato = risultati[Math.floor(Math.random() * risultati.length)];
-                const quota = 1.5 + Math.random() * 2.5; // Quota tra 1.5 e 4.0
-                
-                eventiTest.push({
-                    id: `test_${i}`,
-                    nome: `Evento Test ${i + 1}`,
-                    sport: sport,
-                    tipoQuotes: tipo,
-                    risultatoReale: risultato,
-                    quotaUsata: quota,
-                    risultato: risultato,
-                    quotes: [{ 
-                        quote1: quota, 
-                        quoteX: 3.0 + Math.random(), 
-                        quote2: 2.0 + Math.random(),
-                        quoteYes: quota,
-                        quoteNo: 1.5 + Math.random()
-                    }]
-                });
-            }
-            
-            return eventiTest;
-        }
-
         // ==============================
         // FINE FUNZIONI ANALISI MONTE CARLO
         // ==============================
@@ -9868,35 +8708,6 @@ tippmix_hu
             setTimeout(() => {
                 aggiornaStatisticheBacktest();
             }, 500);
-
-            // ==============================
-            // INIZIALIZZAZIONE CARICAMENTO MONTE CARLO
-            // ==============================
-
-            document.addEventListener('DOMContentLoaded', function() {
-                console.log("DOM caricato, inizializzando Monte Carlo...");
-                
-                // Inizializza variabili Monte Carlo
-                inizializzaAnalisiMonteCarlo();
-                
-                // Inizializza strategie stake se la tab backtest è visibile
-                if (document.getElementById('tab-backtest').classList.contains('active')) {
-                    inizializzaStrategieStake();
-                }
-                
-                // Aggiungi event listener per cambio tab
-                document.querySelectorAll('.tab').forEach(tab => {
-                    tab.addEventListener('click', function() {
-                        if (this.getAttribute('onclick')?.includes('tab-backtest')) {
-                            setTimeout(() => {
-                                inizializzaStrategieStake();
-                            }, 100);
-                        }
-                    });
-                });
-                
-                console.log("Analisi Monte Carlo pronta!");
-            });
         };
     </script>
 </body>

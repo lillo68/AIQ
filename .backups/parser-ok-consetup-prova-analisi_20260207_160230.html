@@ -3136,31 +3136,12 @@
         // ==============================
         // FUNZIONE PER GENERARE ID UNIVOCI
         // ==============================
-        // Contatore incrementale per garantire unicità anche se Date.now() e
-        // performance.now() dovessero restituire lo stesso valore in chiamate
-        // molto ravvicinate.
-        let _generaIdEventoCounter = 0;
         function generaIdEvento() {
-            _generaIdEventoCounter = (_generaIdEventoCounter + 1) & 0xfffff; // evita overflow infinito
-
             const timestamp = Date.now();
-            const perf = (typeof performance !== 'undefined' && performance.now) ? Math.floor(performance.now()) : 0;
-
-            // Usa crypto per una parte casuale più robusta quando disponibile
-            let rand = '';
-            try {
-                if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
-                    const bytes = new Uint8Array(6);
-                    crypto.getRandomValues(bytes);
-                    rand = Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
-                } else {
-                    rand = Math.random().toString(36).substring(2, 12);
-                }
-            } catch (e) {
-                rand = Math.random().toString(36).substring(2, 12);
-            }
-
-            return `ev_${timestamp}_${perf}_${_generaIdEventoCounter}_${rand}`;
+            const random = Math.random().toString(36).substring(2, 15) + 
+                        Math.random().toString(36).substring(2, 15); // Più lungo
+            const microtime = performance.now().toString().replace('.', '').slice(-6);
+            return `ev_${timestamp}_${microtime}_${random.substring(0, 8)}`;
         }
 
         // Esempi di ID generati:

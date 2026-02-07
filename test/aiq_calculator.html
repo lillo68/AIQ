@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>AIQ ValueBet Calculator</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+    padding: 20px;
+}
+
+h1 { text-align: center; }
+
+.container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.calculator {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.05);
+    width: 520px;
+}
+
+h2 {
+    text-align: center;
+    color: #0369a1;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #e5e7eb;
+    padding: 6px;
+    text-align: center;
+}
+
+th { background: #f1f5f9; }
+
+input {
+    width: 80px;
+    text-align: center;
+}
+
+.result { font-weight: bold; }
+
+.value {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.novalue {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.ok {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.warn {
+    background: #fef9c3;
+    color: #854d0e;
+}
+
+/* Tooltip */
+.tooltip {
+    position: fixed;
+    pointer-events: none;
+    background: #020617;
+    color: #f8fafc;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.1s;
+    z-index: 999;
+}
+</style>
+</head>
+
+<body>
+
+<h1>AIQ ValueBet Calculator</h1>
+
+<div class="container">
+    <div id="tennis" class="calculator"></div>
+    <div id="calcio" class="calculator"></div>
+</div>
+
+<div id="tooltip" class="tooltip"></div>
+
+<script>
+const TH = { sm:5, mm:8, ss:7 };
+const NEAR = 0.5;
+const tooltip = document.getElementById("tooltip");
+
+function showTooltip(text, e) {
+    tooltip.innerText = text;
+    tooltip.style.left = e.clientX + 12 + "px";
+    tooltip.style.top  = e.clientY + 12 + "px";
+    tooltip.style.opacity = 1;
+}
+function hideTooltip() {
+    tooltip.style.opacity = 0;
+}
+
+function applyTooltip(el, text) {
+    el.onmousemove = e => showTooltip(text, e);
+    el.onmouseleave = hideTooltip;
+}
+
+function styleCell(el, value, th) {
+    el.className = "";
+    if (value >= th) {
+        el.classList.add("ok");
+        applyTooltip(el, "🟢 Condizione OK");
+    } else if (value >= th - NEAR) {
+        el.classList.add("warn");
+        applyTooltip(el, "🟡 Vicino alla soglia");
+    } else {
+        applyTooltip(el, "🔴 Condizione NON OK");
+    }
+}
+
+function createTennis() {
+    tennis.innerHTML = buildTable("AIQ TENNIS", ["HOME","AWAY"]);
+}
+
+function createCalcio() {
+    calcio.innerHTML = buildTable("AIQ CALCIO", ["HOME","DRAW","AWAY"]);
+}
+
+function buildTable(title, outcomes) {
+    return `
+    <h2>${title}</h2>
+    <table>
+        <tr>
+            <th>Parametro</th>
+            ${outcomes.map(o=>`<th>${o}</th>`).join("")}
+        </tr>
+
+        ${["Sharp","Media","Min","Max"].map(p=>`
+        <tr>
+            <td>Quota ${p}</td>
+            ${outcomes.map(o=>`
+            <td><input type="number" step="0.01" 
+                oninput="calculate('${title}', '${o}')"
+                id="${title}_${p}_${o}">
+            </td>`).join("")}
+        </tr>`).join("")}
+
+        <tr><td>Sharp / Media</td>${outcomes.map(o=>`<td id="${title}_sm_${o}"></td>`).join("")}</tr>
+        <tr><td>Max / Min</td>${outcomes.map(o=>`<td id="${title}_mm_${o}"></td>`).join("")}</tr>
+        <tr><td>Sharp / Soft</td>${outcomes.map(o=>`<td id="${title}_ss_${o}"></td>`).join("")}</tr>
+        <tr><td>FORZA VALUE</td>${outcomes.map(o=>`<td id="${title}_fv_${o}"></td>`).join("")}</tr>
+        <tr><td>VERDETTO</td>${outcomes.map(o=>`<td id="${title}_res_${o}" class="result"></td>`).join("")}</tr>
+    </table>`;
+}
+
+function calculate(title, outcome) {
+    const g = k => parseFloat(document.getElementById(`${title}_${k}_${outcome}`).value);
+    const sharp=g("Sharp"), media=g("Media"), min=g("Min"), max=g("Max");
+    if([sharp,media,min,max].some(isNaN)) return;
+
+    const sm=((sharp-media)/media)*100;
+    const mm=((max-min)/min)*100;
+    const ss=((sharp-min)/min)*100;
+    const fv=(sm+mm+ss)/3;
+
+    const smEl=document.getElementById(`${title}_sm_${outcome}`);
+    const mmEl=document.getElementById(`${title}_mm_${outcome}`);
+    const ssEl=document.getElementById(`${title}_ss_${outcome}`);
+    const fvEl=document.getElementById(`${title}_fv_${outcome}`);
+    const resEl=document.getElementById(`${title}_res_${outcome}`);
+
+    smEl.innerText=sm.toFixed(2)+"%";
+    mmEl.innerText=mm.toFixed(2)+"%";
+    ssEl.innerText=ss.toFixed(2)+"%";
+    fvEl.innerText=fv.toFixed(2)+"%";
+
+    styleCell(smEl,sm,TH.sm);
+    styleCell(mmEl,mm,TH.mm);
+    styleCell(ssEl,ss,TH.ss);
+
+    const value = sm>=TH.sm && mm>=TH.mm && ss>=TH.ss;
+
+    fvEl.className = value ? "ok" : "";
+    applyTooltip(fvEl, value ? "⭐ ValueBet confermata" : "ℹ Media delle metriche");
+
+    resEl.innerText = value ? "VALUE" : "NO VALUE";
+    resEl.className = value ? "result value" : "result novalue";
+}
+
+createTennis();
+createCalcio();
+</script>
+
+</body>
+</html>
+

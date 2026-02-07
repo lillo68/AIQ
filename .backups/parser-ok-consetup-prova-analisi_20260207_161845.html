@@ -4022,19 +4022,10 @@ tippmix_hu
                 return;
             }
 
-            // Genera un ID univoco (con controllo collisione nel database)
-            let newId = null;
-            let tries = 0;
-            do {
-                newId = generaIdEvento();
-                tries++;
-            } while (databaseEventi.some(e => e.id === newId) && tries < 10);
-            if (tries >= 10) console.warn('Generazione ID: possibili collisioni ripetute');
-
             // Crea una COPIA dell'evento corrente per non modificare l'originale
             const eventoDaSalvare = {
                 ...eventoCorrente3,
-                id: newId, // GENERA NUOVO ID UNIVOCO
+                id: generaIdEvento(), // GENERA NUOVO ID UNIVOCO
                 quotes: [...parsedData3], // Copia i dati
                 tipoQuotes: '3_esiti',
                 aiqData: {
@@ -4073,7 +4064,6 @@ tippmix_hu
             // MOSTRA SEMPRE la tabella eventi
             mostraTabellaEventi();
             
-            console.log('Salvato evento 3_esiti con id:', eventoDaSalvare.id);
             showNotification(`✅ Evento ${eventoDaSalvare.sport} salvato! ID: ${eventoDaSalvare.id.slice(0, 8)}...`, 'success');
             
             // Resetta evento corrente MA NON l'input (per permettere modifiche)
@@ -4165,19 +4155,10 @@ tippmix_hu
                 return;
             }
 
-            // Genera un ID univoco (con controllo collisione nel database)
-            let newId2 = null;
-            let tries2 = 0;
-            do {
-                newId2 = generaIdEvento();
-                tries2++;
-            } while (databaseEventi.some(e => e.id === newId2) && tries2 < 10);
-            if (tries2 >= 10) console.warn('Generazione ID: possibili collisioni ripetute');
-
             // Crea una COPIA dell'evento corrente per non modificare l'originale
             const eventoDaSalvare = {
                 ...eventoCorrente2,
-                id: newId2, // GENERA NUOVO ID UNIVOCO
+                id: generaIdEvento(), // GENERA NUOVO ID UNIVOCO
                 quotes: [...parsedData2], // Copia i dati
                 tipoQuotes: '2_esiti',
                 aiqData: {
@@ -4215,7 +4196,6 @@ tippmix_hu
             // MOSTRA SEMPRE la tabella eventi
             mostraTabellaEventi();
             
-            console.log('Salvato evento 2_esiti con id:', eventoDaSalvare.id);
             showNotification(`✅ Evento ${eventoDaSalvare.sport} salvato! ID: ${eventoDaSalvare.id.slice(0, 8)}...`, 'success');
             
             // Resetta evento corrente MA NON l'input

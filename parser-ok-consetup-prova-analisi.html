@@ -2933,8 +2933,15 @@
                         <!-- EVOLUZIONE BANKROLL MULTIPLA -->
                         <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
                             <h4 style="margin-top: 0; margin-bottom: 15px;">📈 Evoluzione Bankroll (Simulazioni)</h4>
-                            <div id="mcBankrollChartContainer" style="height: 250px; background: white; border-radius: 6px; padding: 10px;">
-                                <canvas id="mcBankrollCanvas" width="800" height="220"></canvas>
+                            <div id="mcBankrollChartContainer" style="height: 250px; background: white; border-radius: 6px; padding: 10px; display: flex; gap: 12px; align-items: flex-start;">
+                                <div style="flex: 1; min-width: 200px;">
+                                    <canvas id="mcBankrollCanvas" width="760" height="220"></canvas>
+                                </div>
+                                <div id="mcLegend" style="width: 220px; max-height: 220px; overflow: auto; padding: 8px; border-left: 1px solid #e5e7eb; font-size: 13px; color: #111827;">
+                                    <!-- Legend items will be injected here -->
+                                    <div style="font-weight:600; margin-bottom:6px;">Simulazioni (finale)</div>
+                                    <div id="mcLegendItems" style="display:flex;flex-direction:column;gap:6px;"></div>
+                                </div>
                             </div>
                             <div style="display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap;">
                                 <div style="flex: 1; min-width: 150px;">
@@ -8497,48 +8504,57 @@ tippmix_hu
                 ctx.fillText(`${Math.round(i * 100 / xSteps)}%`, x, height - padding + 18);
             }
             
-            // Titoli assi
+            // Titoli assi: disegno posizioni separate per evitare sovrapposizione
             ctx.fillStyle = '#374151';
             ctx.font = '12px Arial';
+
+            // Etichetta asse Y (Bankroll) ruotata a sinistra, fuori dall'area del grafico
+            ctx.save();
             ctx.textAlign = 'center';
-            ctx.fillText('Bankroll (€)', 20, padding + graphHeight / 2);
+            ctx.translate(padding - 28, padding + graphHeight / 2);
             ctx.rotate(-Math.PI / 2);
-            ctx.fillText('Progresso Scommesse', -height / 2, 15);
-            ctx.rotate(Math.PI / 2);
-            
-            // Legenda: mostriamo percentuali finali per le simulazioni visualizzate
+            ctx.fillText('Bankroll (€)', 0, 0);
+            ctx.restore();
+
+            // Etichetta asse X (Progresso Scommesse) centrata sotto l'asse X
+            ctx.textAlign = 'center';
+            ctx.fillText('Progresso Scommesse', padding + graphWidth / 2, height - padding + 30);
+
+            // Mostra indicatore pagina vicino al bordo superiore destro del canvas
             ctx.fillStyle = '#374151';
             ctx.font = '11px Arial';
             ctx.textAlign = 'right';
             ctx.fillText(`Pagina: ${paginaMCCorrente}`, width - 10, padding - 5);
 
-            // Disegna legenda vera e propria sulla destra (area libera)
-            const legendX = width - padding - 6; // vicino al bordo destro
-            const legendYStart = padding + 20;
-            const legendLineHeight = 16;
-            const maxLines = Math.floor((height - padding * 2) / legendLineHeight);
-            const perColumn = Math.max(1, Math.min(legendItems.length, maxLines));
+            // Popola la legenda esterna nel DOM (#mcLegendItems)
+            try {
+                const legendContainer = document.getElementById('mcLegendItems');
+                if (legendContainer) {
+                    legendContainer.innerHTML = '';
+                    legendItems.forEach(item => {
+                        const row = document.createElement('div');
+                        row.style.display = 'flex';
+                        row.style.alignItems = 'center';
+                        row.style.gap = '8px';
 
-            // Se ci sono più voci di quante ne stiano in una colonna, calcola colonne
-            const cols = Math.ceil(legendItems.length / perColumn);
-            ctx.textAlign = 'left';
-            ctx.font = '12px Arial';
-            for (let c = 0; c < cols; c++) {
-                const colX = legendX - c * 120 - 40; // sposta a sinistra per più colonne
-                for (let r = 0; r < perColumn; r++) {
-                    const idx = c * perColumn + r;
-                    if (idx >= legendItems.length) break;
-                    const item = legendItems[idx];
-                    const y = legendYStart + r * legendLineHeight;
+                        const swatch = document.createElement('span');
+                        swatch.style.display = 'inline-block';
+                        swatch.style.width = '12px';
+                        swatch.style.height = '12px';
+                        swatch.style.background = item.color;
+                        swatch.style.borderRadius = '2px';
 
-                    // Quadrato colore
-                    ctx.fillStyle = item.color;
-                    ctx.fillRect(colX, y - 10, 10, 10);
+                        const text = document.createElement('span');
+                        text.textContent = `#${item.index}: ${item.pctText}`;
+                        text.style.fontSize = '13px';
 
-                    // Testo: "#N: +X.X%"
-                    ctx.fillStyle = '#111827';
-                    ctx.fillText(`#${item.index}: ${item.pctText}`, colX + 14, y);
+                        row.appendChild(swatch);
+                        row.appendChild(text);
+                        legendContainer.appendChild(row);
+                    });
                 }
+            } catch (e) {
+                console.error('Errore popolando legenda MC:', e);
             }
             
             // Aggiorna contatore simulazioni visibili

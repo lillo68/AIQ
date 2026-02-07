@@ -4399,6 +4399,15 @@ tippmix_hu
             return cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
         }
 
+        // Restituisce una versione corta e più distintiva di un ID
+        function formatShortId(id) {
+            if (!id) return 'N/D';
+            // Se l'id è breve, restituiscilo così com'è
+            if (id.length <= 12) return id;
+            // Mostra in forma: primi6 + '…' + ultimi4
+            return id.slice(0, 6) + '…' + id.slice(-4);
+        }
+
         // ==============================
         // FUNZIONI ORDINAMENTO 3 ESITI
         // ==============================
@@ -4960,7 +4969,7 @@ tippmix_hu
                         <td style="text-align: center; color: #666; width: 40px;">${numero}</td>
                         <td>
                             <strong>${evento.nome}</strong><br>
-                            <small style="color: #666; font-size: 11px;">ID: ${evento.id ? evento.id.substring(0, 8) : 'N/D'}</small>
+                            <small style="color: #666; font-size: 11px;" title="${evento.id || ''}">ID: ${evento.id ? formatShortId(evento.id) : 'N/D'}</small>
                         </td>
                         <td>${evento.sport}</td>
                         <td>

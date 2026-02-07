@@ -8433,11 +8433,51 @@ tippmix_hu
                 ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
                 ctx.fill();
                 
-                // Etichetta con numero simulazione
-                ctx.fillStyle = '#374151';
+                // Etichetta con percentuale (last vs iniziale) e sfondo per leggibilità
+                const initialBankroll = sim.evoluzioneBankroll[0] || 1;
+                const pct = ((lastBankroll - initialBankroll) / initialBankroll) * 100;
+                const pctText = (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
+
                 ctx.font = '10px Arial';
                 ctx.textAlign = 'left';
-                ctx.fillText(`#${inizio + index + 1}`, lastX + 5, lastY + 3);
+                ctx.fillStyle = color;
+
+                // Calcola offset verticali alternati per ridurre sovrapposizione
+                const baseOffset = 6;
+                const alternation = (index % 2 === 0) ? -baseOffset - Math.floor(index/2)*10 : baseOffset + Math.floor(index/2)*10;
+                const labelX = lastX + 6;
+                const labelY = lastY + alternation;
+
+                // Disegna sfondo arrotondato per migliorare leggibilità del testo
+                const paddingRect = 4;
+                ctx.fillStyle = 'rgba(255,255,255,0.85)';
+                const textWidth = ctx.measureText(pctText).width;
+                const rectX = labelX - 2;
+                const rectY = labelY - 10;
+                const rectW = textWidth + paddingRect * 2;
+                const rectH = 14;
+                // arrotonda i bordi con path
+                const r = 4;
+                ctx.beginPath();
+                ctx.moveTo(rectX + r, rectY);
+                ctx.arcTo(rectX + rectW, rectY, rectX + rectW, rectY + rectH, r);
+                ctx.arcTo(rectX + rectW, rectY + rectH, rectX, rectY + rectH, r);
+                ctx.arcTo(rectX, rectY + rectH, rectX, rectY, r);
+                ctx.arcTo(rectX, rectY, rectX + rectW, rectY, r);
+                ctx.closePath();
+                ctx.fill();
+
+                // Disegna testo percentuale sopra il rettangolo
+                ctx.fillStyle = color;
+                ctx.fillText(pctText, labelX + paddingRect - 2, labelY + 2);
+
+                // Piccola linea che collega il punto al label
+                ctx.beginPath();
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 0.8;
+                ctx.moveTo(lastX + Math.sign(6) * 2, lastY);
+                ctx.lineTo(labelX - 2, labelY - 4);
+                ctx.stroke();
             });
             
             // Ripristina opacità

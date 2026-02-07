@@ -8397,6 +8397,9 @@ tippmix_hu
                 '#f59e0b', '#ef4444', '#10b981', '#3b82f6', '#ec4899'
             ];
             
+            // Raccolta elementi legenda
+            const legendItems = [];
+
             // Disegna ogni simulazione
             simulazioniVisualizzate.forEach((sim, index) => {
                 if (!sim.evoluzioneBankroll || sim.evoluzioneBankroll.length === 0) return;
@@ -8433,51 +8436,11 @@ tippmix_hu
                 ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
                 ctx.fill();
                 
-                // Etichetta con percentuale (last vs iniziale) e sfondo per leggibilità
+                // Prepara elemento per legenda: percentuale finale vs iniziale
                 const initialBankroll = sim.evoluzioneBankroll[0] || 1;
                 const pct = ((lastBankroll - initialBankroll) / initialBankroll) * 100;
                 const pctText = (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
-
-                ctx.font = '10px Arial';
-                ctx.textAlign = 'left';
-                ctx.fillStyle = color;
-
-                // Calcola offset verticali alternati per ridurre sovrapposizione
-                const baseOffset = 6;
-                const alternation = (index % 2 === 0) ? -baseOffset - Math.floor(index/2)*10 : baseOffset + Math.floor(index/2)*10;
-                const labelX = lastX + 6;
-                const labelY = lastY + alternation;
-
-                // Disegna sfondo arrotondato per migliorare leggibilità del testo
-                const paddingRect = 4;
-                ctx.fillStyle = 'rgba(255,255,255,0.85)';
-                const textWidth = ctx.measureText(pctText).width;
-                const rectX = labelX - 2;
-                const rectY = labelY - 10;
-                const rectW = textWidth + paddingRect * 2;
-                const rectH = 14;
-                // arrotonda i bordi con path
-                const r = 4;
-                ctx.beginPath();
-                ctx.moveTo(rectX + r, rectY);
-                ctx.arcTo(rectX + rectW, rectY, rectX + rectW, rectY + rectH, r);
-                ctx.arcTo(rectX + rectW, rectY + rectH, rectX, rectY + rectH, r);
-                ctx.arcTo(rectX, rectY + rectH, rectX, rectY, r);
-                ctx.arcTo(rectX, rectY, rectX + rectW, rectY, r);
-                ctx.closePath();
-                ctx.fill();
-
-                // Disegna testo percentuale sopra il rettangolo
-                ctx.fillStyle = color;
-                ctx.fillText(pctText, labelX + paddingRect - 2, labelY + 2);
-
-                // Piccola linea che collega il punto al label
-                ctx.beginPath();
-                ctx.strokeStyle = color;
-                ctx.lineWidth = 0.8;
-                ctx.moveTo(lastX + Math.sign(6) * 2, lastY);
-                ctx.lineTo(labelX - 2, labelY - 4);
-                ctx.stroke();
+                legendItems.push({ color, pctText, index: inizio + index + 1 });
             });
             
             // Ripristina opacità
@@ -8543,11 +8506,40 @@ tippmix_hu
             ctx.fillText('Progresso Scommesse', -height / 2, 15);
             ctx.rotate(Math.PI / 2);
             
-            // Legenda
+            // Legenda: mostriamo percentuali finali per le simulazioni visualizzate
             ctx.fillStyle = '#374151';
             ctx.font = '11px Arial';
             ctx.textAlign = 'right';
             ctx.fillText(`Pagina: ${paginaMCCorrente}`, width - 10, padding - 5);
+
+            // Disegna legenda vera e propria sulla destra (area libera)
+            const legendX = width - padding - 6; // vicino al bordo destro
+            const legendYStart = padding + 20;
+            const legendLineHeight = 16;
+            const maxLines = Math.floor((height - padding * 2) / legendLineHeight);
+            const perColumn = Math.max(1, Math.min(legendItems.length, maxLines));
+
+            // Se ci sono più voci di quante ne stiano in una colonna, calcola colonne
+            const cols = Math.ceil(legendItems.length / perColumn);
+            ctx.textAlign = 'left';
+            ctx.font = '12px Arial';
+            for (let c = 0; c < cols; c++) {
+                const colX = legendX - c * 120 - 40; // sposta a sinistra per più colonne
+                for (let r = 0; r < perColumn; r++) {
+                    const idx = c * perColumn + r;
+                    if (idx >= legendItems.length) break;
+                    const item = legendItems[idx];
+                    const y = legendYStart + r * legendLineHeight;
+
+                    // Quadrato colore
+                    ctx.fillStyle = item.color;
+                    ctx.fillRect(colX, y - 10, 10, 10);
+
+                    // Testo: "#N: +X.X%"
+                    ctx.fillStyle = '#111827';
+                    ctx.fillText(`#${item.index}: ${item.pctText}`, colX + 14, y);
+                }
+            }
             
             // Aggiorna contatore simulazioni visibili
             document.getElementById('mcSimulazioniVis').textContent = 
